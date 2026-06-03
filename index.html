@@ -29,16 +29,35 @@
       cursor: pointer;
     }
 
+   /* The animation that creates the pop-out entrance effect */
+    @keyframes popOut {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      70% {
+        transform: scale(1.1); /* Bounces slightly larger than normal */
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1); /* Settles to normal size */
+        opacity: 1;
+      }
+    }
+
     /* The clickable image button on the envelope */
     #open-img-btn {
-      width: 60%; /* Adjusts the size on mobile screens */
-      max-width: 300px; /* Prevents it from getting too huge on a computer */
+      width: 60%; 
+      max-width: 300px; 
       cursor: pointer;
-      transition: transform 0.2s ease-in-out; /* Adds a smooth effect */
+      /* Smooth transition for when a user hovers over it */
+      transition: transform 0.2s ease-in-out; 
+      /* Triggers the pop-out animation the moment the page loads */
+      animation: popOut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
     #open-img-btn:hover {
-      transform: scale(1.05); /* Makes the button slightly grow when hovered over */
+      transform: scale(1.1); /* Makes it pop out a bit more when the mouse hovers over it */
     }
     /* The actual Canva Invitation */
     #invitation-frame {
