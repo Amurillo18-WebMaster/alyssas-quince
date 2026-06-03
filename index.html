@@ -13,7 +13,7 @@
       padding: 0;
       height: 100%;
       background-color: #fcfcfc;
-      overflow-x: hidden; /* Prevents side-scrolling when zoomed */
+      overflow-x: hidden; 
     }
 
     #envelope-screen {
@@ -55,14 +55,13 @@
       max-width: 500px; 
       margin: 0 auto; 
       background-color: #fff;
-      overflow: hidden; /* Crops off the zoomed-in edges */
+      overflow: hidden; 
     }
 
-    /* The new zoom container to focus on the center for mobile */
     .page-wrapper {
       position: relative;
-      width: 120%; /* Zooms in by 20% */
-      left: -10%; /* Re-centers the zoomed image */
+      width: 120%; 
+      left: -10%; 
       display: block;
     }
 
@@ -107,7 +106,12 @@
          style="position: absolute; top: 32%; left: 24%; width: 52%; height: 16%; display: block; z-index: 10;"></a>
     </div>
 
-    <div class="page-wrapper"><img src="page6.gif" class="invite-page" alt="Page 6"></div>
+    <div class="page-wrapper">
+      <img src="page6.gif" class="invite-page" alt="Page 6">
+      <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
+         style="position: absolute; top: 69%; left: 54%; width: 20%; height: 5%; display: block; z-index: 10;"></a>
+    </div>
+
     <div class="page-wrapper"><img src="page7.gif" class="invite-page" alt="Page 7"></div>
     
     <div class="page-wrapper">
@@ -119,7 +123,7 @@
 
   <script>
     function revealInvite() {
-      // 1. Force the music to play first to satisfy Apple/Android interaction rules
+      // Force the music to play
       let music = document.getElementById('bg-music');
       music.play().then(() => {
         console.log("Music started playing successfully.");
@@ -127,10 +131,10 @@
         console.log("Audio play blocked by device: ", error);
       });
 
-      // 2. Hide the envelope
+      // Hide the envelope
       document.getElementById('envelope-screen').style.display = 'none';
       
-      // 3. Show the scrolling images
+      // Show the scrolling images
       document.getElementById('invitation-content').style.display = 'block';
     }
   </script>
