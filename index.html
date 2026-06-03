@@ -9,17 +9,17 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background-color: #fcfcfc; /* Match your envelope background */
+      background-color: #fcfcfc;
     }
 
-    /* The Envelope Overlay - Locks the screen */
+    /* The Envelope Overlay */
     #envelope-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('envelope.png'); /* Your exported Canva image */
+      background-image: url('envelope.png'); 
       background-size: cover;
       background-position: center;
       display: flex;
@@ -29,48 +29,47 @@
       cursor: pointer;
     }
 
-   /* The animation that creates the pop-out entrance effect */
+    /* The pop-out animation */
     @keyframes popOut {
-      0% {
-        transform: scale(0.5);
-        opacity: 0;
-      }
-      90% {
-        transform: scale(1.1); /* Bounces slightly larger than normal */
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1); /* Settles to normal size */
-        opacity: 1;
-      }
+      0% { transform: scale(0.5); opacity: 0; }
+      90% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    /* The clickable image button on the envelope */
+    /* The clickable image button */
     #open-img-btn {
-      width: 100%; 
-      max-width: 700px; 
+      width: 90%; 
+      max-width: 800px; 
       cursor: pointer;
-      /* Smooth transition for when a user hovers over it */
-      transition: transform 0.4s ease-in-out; 
-      /* Triggers the pop-out animation the moment the page loads */
-      animation: popOut 0.9s cubic-bezier(0.35, 1.77, 0.64, 2.55) forwards;
+      transition: transform 0.2s ease-in-out; 
+      animation: popOut 0.8s cubic-bezier(0.35, 1.77, 0.64, 2.55) forwards;
     }
 
     #open-img-btn:hover {
-      transform: scale(1.1); /* Makes it pop out a bit more when the mouse hovers over it */
+      transform: scale(1.1); 
     }
-    /* The actual Canva Invitation */
-    #invitation-frame {
+
+    /* The vertically scrolling invitation */
+    #invitation-content {
       display: none; /* Hidden until clicked */
       width: 100%;
-      height: 100vh;
+      max-width: 500px; /* Keeps it looking like a phone screen on desktop */
+      margin: 0 auto; /* Centers it on computer screens */
+      background-color: #fff;
+    }
+
+    .invite-page {
+      width: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
       border: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- Audio Element -->
+  <!-- Audio Element (Make sure your file is actually named song.mp3) -->
   <audio id="bg-music" src="Quinceañera.mp3" loop></audio>
 
   <!-- Envelope Overlay -->
@@ -78,19 +77,31 @@
     <img src="Cordially2.png" id="open-img-btn" alt="You Are Cordially Invited">
   </div>
 
-  <!-- Scrollable Canva Embed -->
-  <iframe id="invitation-frame" src="https://www.canva.com/design/DAHLFXj_EKU/BCwNGFJ1xgjgiVTNOKGqAw/view?embed"></iframe>
+  <!-- Vertically Stacked Invitation Images -->
+  <div id="invitation-content">
+    <img src="page1.png" class="invite-page" alt="Page 1">
+    <img src="page2.png" class="invite-page" alt="Page 2">
+    <img src="page3.png" class="invite-page" alt="Page 3">
+    <img src="page4.png" class="invite-page" alt="Page 4">
+    <img src="page5.png" class="invite-page" alt="Page 5">
+    <img src="page6.png" class="invite-page" alt="Page 6">
+    <img src="page7.png" class="invite-page" alt="Page 7">
+    <img src="page8.png" class="invite-page" alt="Page 8">
+  </div>
 
   <script>
     function revealInvite() {
-      // 1. Hide the envelope overlay
+      // 1. Hide the envelope
       document.getElementById('envelope-screen').style.display = 'none';
       
-      // 2. Show the Canva iframe (which allows natural scrolling and clickable links)
-      document.getElementById('invitation-frame').style.display = 'block';
+      // 2. Show the scrolling images
+      document.getElementById('invitation-content').style.display = 'block';
       
-      // 3. Play the music (Browser allows this because the user just clicked)
-      document.getElementById('bg-music').play();
+      // 3. Force the music to play
+      let music = document.getElementById('bg-music');
+      music.play().catch(function(error) {
+        console.log("Audio blocked by browser:", error);
+      });
     }
   </script>
 
