@@ -1,22 +1,80 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.6">
-  <style type="text/css">
-    body {background-color: #fbfbfb}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 18.0px 'Snell Roundhand'; color: #000000; -webkit-text-stroke: #ffffff; background-color: #c9a02a}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    span.s1 {font-kerning: none}
-    span.s2 {font: 18.0px Avenir; font-kerning: none}
-    span.s3 {text-decoration: underline ; font-kerning: none; color: #0000e9; -webkit-text-stroke: 0px #0000e9}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alyssa's Quinceañera</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #fcfcfc; /* Match your envelope background */
+    }
+
+    /* The Envelope Overlay - Locks the screen */
+    #envelope-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('envelope.png'); /* Your exported Canva image */
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 50; 
+      cursor: pointer;
+    }
+
+    /* The clickable button on the envelope */
+    #open-btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #d4af37; /* Gold or your theme color */
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* The actual Canva Invitation */
+    #invitation-frame {
+      display: none; /* Hidden until clicked */
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1"><b>You Are</b></span><span class="s2"> </span><span class="s1"><b>Invited</b></span><span class="s2">!</span></p>
-<p class="p2"><span class="s3"><a href="https://www.canva.com/design/DAHLFXj_EKU/BCwNGFJ1xgjgiVTNOKGqAw/view?utm_content=DAHLFXj_EKU&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link">Copy of Quinceanera</a></span><span class="s1"> by Juan Murillo Alba"&gt;</span></p>
+
+  <!-- Audio Element -->
+  <audio id="bg-music" src="your-Quinceañera.mp3" loop></audio>
+
+  <!-- Envelope Overlay -->
+  <div id="envelope-screen" onclick="revealInvite()">
+    <button id="open-btn">Tap to Open</button>
+  </div>
+
+  <!-- Scrollable Canva Embed -->
+  <iframe id="invitation-frame" src=https://www.canva.com/design/DAHLFXj_EKU/BCwNGFJ1xgjgiVTNOKGqAw/view?utm_content=DAHLFXj_EKU&utm_campaign=designshare&utm_medium=embeds&utm_source=link></iframe>
+
+  <script>
+    function revealInvite() {
+      // 1. Hide the envelope overlay
+      document.getElementById('envelope-screen').style.display = 'none';
+      
+      // 2. Show the Canva iframe (which allows natural scrolling and clickable links)
+      document.getElementById('invitation-frame').style.display = 'block';
+      
+      // 3. Play the music (Browser allows this because the user just clicked)
+      document.getElementById('bg-music').play();
+    }
+  </script>
+
 </body>
 </html>
