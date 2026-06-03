@@ -58,20 +58,58 @@
       overflow: hidden; 
     }
 
-    /* Updated to zoom in by 30% and keep it perfectly centered */
-    .page-wrapper {
-      position: relative;
-      width: 130%; 
-      left: -15%; 
-      display: block;
-    }
-
     .invite-page {
       width: 100%;
       display: block; 
       margin: 0;
       padding: 0;
       border: none;
+    }
+
+    /* =========================================
+       DESKTOP SETTINGS (Screens wider than 768px)
+       ========================================= */
+    @media (min-width: 769px) {
+      .page-wrapper {
+        position: relative;
+        width: 100%; /* No zoom on desktop */
+        left: 0; 
+        display: block;
+      }
+      
+      #countdown-widget {
+        position: absolute; 
+        top: 20%; 
+        left: 33%; 
+        width: 34%; 
+        height: 51px; 
+        border: none; 
+        background-color: transparent; 
+        z-index: 10;
+      }
+    }
+
+    /* =========================================
+       MOBILE SETTINGS (Cell phones only)
+       ========================================= */
+    @media (max-width: 768px) {
+      .page-wrapper {
+        position: relative;
+        width: 130%; /* Zooms in by 30% ONLY on mobile */
+        left: -15%;  /* Perfectly re-centers the zoomed image */
+        display: block;
+      }
+
+      #countdown-widget {
+        position: absolute; 
+        top: 15%; /* Raised by 5% */
+        left: 35.5%; /* Re-centered horizontally */
+        width: 29%; /* Shrunk by exactly 15% */
+        height: 43px; /* Shrunk by exactly 15% */
+        border: none; 
+        background-color: transparent; 
+        z-index: 10;
+      }
     }
   </style>
 </head>
@@ -80,7 +118,7 @@
   <audio id="bg-music" src="Quinceañera.mp3" loop preload="auto"></audio>
 
   <div id="envelope-screen">
-    <img src="Cordially2.png" id="open-img-btn" alt="You Are Cordially Invited" onclick="revealInvite()">
+    <img src="Cordially2.png" id="open-img-btn" alt="You Are Cordially Invited">
   </div>
 
   <div id="invitation-content">
@@ -96,9 +134,7 @@
     
     <div class="page-wrapper">
       <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
-      <iframe src="https://www.tickcounter.com/widget/countdown/10450526" 
-              style="position: absolute; top: 24%; left: 33%; width: 34%; height: 51px; border: none; background-color: transparent; z-index: 10;" 
-              scrolling="no"></iframe>
+      <iframe id="countdown-widget" src="https://www.tickcounter.com/widget/countdown/10450526" scrolling="no"></iframe>
     </div>
 
     <div class="page-wrapper">
@@ -123,21 +159,26 @@
   </div>
 
   <script>
-    function revealInvite() {
-      // Force the music to play
-      let music = document.getElementById('bg-music');
-      music.play().then(() => {
-        console.log("Music started playing successfully.");
-      }).catch((error) => {
-        console.log("Audio play blocked by device: ", error);
-      });
-
-      // Hide the envelope
-      document.getElementById('envelope-screen').style.display = 'none';
+    // Modern JavaScript Event Listener guarantees iOS and Android recognize the interaction
+    document.getElementById('open-img-btn').addEventListener('click', function(event) {
+      event.preventDefault();
       
-      // Show the scrolling images
+      let music = document.getElementById('bg-music');
+      
+      // Forces the music to play explicitly upon this click event
+      let playPromise = music.play();
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          console.log("Audio playing successfully.");
+        }).catch(error => {
+          console.log("Audio blocked by strict device settings: ", error);
+        });
+      }
+
+      // Hides envelope and reveals the fully zoomed invitation
+      document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
-    }
+    });
   </script>
 
 </body>
