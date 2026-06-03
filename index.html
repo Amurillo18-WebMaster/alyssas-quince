@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
+  
+  <link rel="preload" href="envelope.png" as="image">
+  
   <style>
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
       background-color: #fcfcfc;
+      overflow-x: hidden; /* Prevents side-scrolling when zoomed */
     }
 
-    /* The Envelope Overlay */
     #envelope-screen {
       position: fixed;
       top: 0;
@@ -26,17 +29,14 @@
       justify-content: center;
       align-items: center;
       z-index: 50; 
-      cursor: pointer;
     }
 
-    /* The pop-out animation - Reduced pop by 10% */
     @keyframes popOut {
       0% { transform: scale(0.5); opacity: 0; }
       70% { transform: scale(1.08); opacity: 1; } 
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* The clickable image button - Reduced size by 10% */
     #open-img-btn {
       width: 81%; 
       max-width: 540px; 
@@ -46,16 +46,24 @@
     }
 
     #open-img-btn:hover {
-      transform: scale(1.08); /* Reduced hover pop-out size */
+      transform: scale(1.08); 
     }
 
-    /* The vertically scrolling invitation */
     #invitation-content {
       display: none; 
       width: 100%;
       max-width: 500px; 
       margin: 0 auto; 
       background-color: #fff;
+      overflow: hidden; /* Crops off the zoomed-in edges */
+    }
+
+    /* The new zoom container to focus on the center for mobile */
+    .page-wrapper {
+      position: relative;
+      width: 120%; /* Zooms in by 20% */
+      left: -10%; /* Re-centers the zoomed image */
+      display: block;
     }
 
     .invite-page {
@@ -69,65 +77,61 @@
 </head>
 <body>
 
-  <audio id="bg-music" src="Quinceañera.mp3" loop></audio>
+  <audio id="bg-music" src="Quinceañera.mp3" loop preload="auto"></audio>
 
-  <div id="envelope-screen" onclick="revealInvite()">
-    <img src="Cordially2.png" id="open-img-btn" alt="You Are Cordially Invited">
+  <div id="envelope-screen">
+    <img src="Cordially2.png" id="open-img-btn" alt="You Are Cordially Invited" onclick="revealInvite()">
   </div>
 
   <div id="invitation-content">
-    <img src="page1.gif" class="invite-page" alt="Page 1">
-    <img src="page2.gif" class="invite-page" alt="Page 2">
-    <img src="page3.gif" class="invite-page" alt="Page 3">
     
-    <div style="position: relative; width: 100%;">
-      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
-      
-      <iframe src="https://www.tickcounter.com/widget/countdown/10450526" 
-              style="position: absolute; 
-                     top: 20%; 
-                     left: 30%; 
-                     width: 40%; 
-                     height: 60px; 
-                     border: none; 
-                     background-color: transparent;
-                     z-index: 10;" 
-              scrolling="no">
-      </iframe>
+    <div class="page-wrapper">
+      <img src="page1.gif" class="invite-page" alt="Page 1">
+      <a href="google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816193,-117.6390993,17z/data=!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=tts&g_ep=EgoyMDI2MDUyNy4wIPu8ASoASAFQAw%3D%3D&skid=117dca46-58f3-45dd-b147-7cfd5cfa9462" target="_blank" 
+         style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
-    <img src="page5.gif" class="invite-page" alt="Page 5">
-    <img src="page6.gif" class="invite-page" alt="Page 6">
-    <img src="page7.gif" class="invite-page" alt="Page 7">
+    <div class="page-wrapper"><img src="page2.gif" class="invite-page" alt="Page 2"></div>
+    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
     
-    <div style="position: relative; width: 100%;">
+    <div class="page-wrapper">
+      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
+      <iframe src="https://www.tickcounter.com/widget/countdown/10450526" 
+              style="position: absolute; top: 20%; left: 33%; width: 34%; height: 51px; border: none; background-color: transparent; z-index: 10;" 
+              scrolling="no"></iframe>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page5.gif" class="invite-page" alt="Page 5">
+      <a href="google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816193,-117.6390993,17z/data=!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=tts&g_ep=EgoyMDI2MDUyNy4wIPu8ASoASAFQAw%3D%3D&skid=117dca46-58f3-45dd-b147-7cfd5cfa9462" target="_blank" 
+         style="position: absolute; top: 32%; left: 24%; width: 52%; height: 16%; display: block; z-index: 10;"></a>
+    </div>
+
+    <div class="page-wrapper"><img src="page6.gif" class="invite-page" alt="Page 6"></div>
+    <div class="page-wrapper"><img src="page7.gif" class="invite-page" alt="Page 7"></div>
+    
+    <div class="page-wrapper">
       <img src="page8.gif" class="invite-page" alt="Page 8 - RSVP">
-      
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
-         style="position: absolute; 
-                top: 85%; 
-                left: 40%; 
-                width: 20%; 
-                height: 10%; 
-                display: block; 
-                z-index: 10;">
-      </a>
+         style="position: absolute; top: 85%; left: 40%; width: 20%; height: 10%; display: block; z-index: 10;"></a>
     </div>
   </div>
 
   <script>
     function revealInvite() {
-      // 1. Hide the envelope
+      // 1. Force the music to play first to satisfy Apple/Android interaction rules
+      let music = document.getElementById('bg-music');
+      music.play().then(() => {
+        console.log("Music started playing successfully.");
+      }).catch((error) => {
+        console.log("Audio play blocked by device: ", error);
+      });
+
+      // 2. Hide the envelope
       document.getElementById('envelope-screen').style.display = 'none';
       
-      // 2. Show the scrolling images
+      // 3. Show the scrolling images
       document.getElementById('invitation-content').style.display = 'block';
-      
-      // 3. Force the music to play
-      let music = document.getElementById('bg-music');
-      music.play().catch(function(error) {
-        console.log("Audio blocked by browser:", error);
-      });
     }
   </script>
 
