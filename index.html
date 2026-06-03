@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alyssa's Quinceañera</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #fcfcfc; /* Match your envelope background */
+    }
+
+    /* The Envelope Overlay - Locks the screen */
+    #envelope-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('envelope.png'); /* Your exported Canva image */
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 50; 
+      cursor: pointer;
+    }
+
+    /* The clickable button on the envelope */
+    #open-btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #d4af37; /* Gold or your theme color */
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* The actual Canva Invitation */
+    #invitation-frame {
+      display: none; /* Hidden until clicked */
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio Element -->
+  <audio id="bg-music" src="your-Quinceañera.mp3" loop></audio>
+
+  <!-- Envelope Overlay -->
+  <div id="envelope-screen" onclick="revealInvite()">
+    <button id="open-btn">You are Invited!</button>
+  </div>
+
+  <!-- Scrollable Canva Embed -->
+  <iframe id="invitation-frame" src=<div style="position: relative; width: 100%; height: 0; padding-top: 65.3001%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https://www.canva.com/design/DAHLFXj_EKU/BCwNGFJ1xgjgiVTNOKGqAw/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+  </iframe>
+</div>
+<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHLFXj_EKU&#x2F;BCwNGFJ1xgjgiVTNOKGqAw&#x2F;view?utm_content=DAHLFXj_EKU&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Alyssa's Quinceañera Invitation</a> by Juan Murillo Alba></iframe>
+
+  <script>
+    function revealInvite() {
+      // 1. Hide the envelope overlay
+      document.getElementById('envelope-screen').style.display = 'none';
+      
+      // 2. Show the Canva iframe (which allows natural scrolling and clickable links)
+      document.getElementById('invitation-frame').style.display = 'block';
+      
+      // 3. Play the music (Browser allows this because the user just clicked)
+      document.getElementById('bg-music').play();
+    }
+  </script>
+
+</body>
+</html>
