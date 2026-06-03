@@ -29,18 +29,17 @@
       cursor: pointer;
     }
 
-    /* The clickable button on the envelope */
-    #open-btn {
-      padding: 15px 30px;
-      font-size: 18px;
-      background-color: #d4af37; /* Gold or your theme color */
-      color: white;
-      border: none;
-      border-radius: 25px;
+    /* The clickable image button on the envelope */
+    #open-img-btn {
+      width: 80%; /* Adjusts the size on mobile screens */
+      max-width: 300px; /* Prevents it from getting too huge on a computer */
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease-in-out; /* Adds a smooth effect */
     }
 
+    #open-img-btn:hover {
+      transform: scale(1.05); /* Makes the button slightly grow when hovered over */
+    }
     /* The actual Canva Invitation */
     #invitation-frame {
       display: none; /* Hidden until clicked */
