@@ -29,38 +29,38 @@
       cursor: pointer;
     }
 
-    /* The pop-out animation */
+    /* The pop-out animation - Enhanced bounce effect */
     @keyframes popOut {
       0% { transform: scale(0.5); opacity: 0; }
-      90% { transform: scale(1.1); opacity: 1; }
+      70% { transform: scale(1.2); opacity: 1; } /* Increased from 1.1 for a bigger pop */
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* The clickable image button */
+    /* The clickable image button - Doubled in size */
     #open-img-btn {
-      width: 90%; 
-      max-width: 800px; 
+      width: 90%; /* Increased so it takes up more of a mobile screen */
+      max-width: 600px; /* Doubled from 300px for larger screens */
       cursor: pointer;
       transition: transform 0.2s ease-in-out; 
-      animation: popOut 0.8s cubic-bezier(0.35, 1.77, 0.64, 2.55) forwards;
+      animation: popOut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
     #open-img-btn:hover {
-      transform: scale(1.1); 
+      transform: scale(1.2); /* Increased hover pop-out size */
     }
 
     /* The vertically scrolling invitation */
     #invitation-content {
-      display: none; /* Hidden until clicked */
+      display: none; 
       width: 100%;
-      max-width: 500px; /* Keeps it looking like a phone screen on desktop */
-      margin: 0 auto; /* Centers it on computer screens */
+      max-width: 500px; 
+      margin: 0 auto; 
       background-color: #fff;
     }
 
     .invite-page {
       width: 100%;
-      display: block;
+      display: block; 
       margin: 0;
       padding: 0;
       border: none;
@@ -69,19 +69,17 @@
 </head>
 <body>
 
-  <!-- Audio Element (Make sure your file is actually named song.mp3) -->
-  <audio id="bg-music" src="Quinceañera.mp3" loop></audio>
+  <audio id="bg-music" src="Quinceañera.mp3" loop></audio>
 
-  <!-- Envelope Overlay -->
   <div id="envelope-screen" onclick="revealInvite()">
     <img src="Cordially2.png" id="open-img-btn" alt="You Are Cordially Invited">
   </div>
 
-  <!-- Vertically Stacked Invitation Images -->
   <div id="invitation-content">
     <img src="page1.gif" class="invite-page" alt="Page 1">
     <img src="page2.gif" class="invite-page" alt="Page 2">
     <img src="page3.gif" class="invite-page" alt="Page 3">
+    
     <div style="position: relative; width: 100%;">
       <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
       
@@ -97,10 +95,24 @@
               scrolling="no">
       </iframe>
     </div>
+
     <img src="page5.gif" class="invite-page" alt="Page 5">
     <img src="page6.gif" class="invite-page" alt="Page 6">
     <img src="page7.gif" class="invite-page" alt="Page 7">
-    <img src="page8.gif" class="invite-page" alt="Page 8">
+    
+    <div style="position: relative; width: 100%;">
+      <img src="page8.gif" class="invite-page" alt="Page 8 - RSVP">
+      
+      <a href="YOUR_GOOGLE_FORM_LINK_HERE" target="_blank" 
+         style="position: absolute; 
+                top: 75%; 
+                left: 20%; 
+                width: 60%; 
+                height: 10%; 
+                display: block; 
+                z-index: 10;">
+      </a>
+    </div>
   </div>
 
   <script>
