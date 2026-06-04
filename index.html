@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  
   <link rel="preload" href="envelope.gif" as="image">
   
   <style>
@@ -51,240 +55,29 @@
     /* =========================================
        CUSTOM COUNTDOWN WIDGET STYLES
        ========================================= */
+    .countdown-title {
+      font-family: 'Great Vibes', cursive;
+      color: #333; /* If this is too dark against the background, change to #fff */
+      font-size: 2.8rem; /* Increased size for the cursive font */
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin: 0 0 5px 0;
+      text-align: center;
+    }
+
     .countdown-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      color: #333;
-      background-color: #ffffff;
-      padding: 10px;
+      font-family: 'Great Vibes', cursive;
+      color: #333; /* Change to #fff if needed */
+      background-color: transparent; 
+      padding: 0px 10px;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: none; 
       width: 100%;
-      height: 100%;
       box-sizing: border-box;
     }
 
     .time-segment {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 60px;
-    }
-
-    .number {
-      font-size: 2.2rem;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: 1px;
-    }
-
-    .label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #888;
-      margin-top: 6px;
-    }
-
-    .divider {
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: #ccc;
-      margin: 0 8px;
-      padding-bottom: 15px;
-    }
-
-    /* =========================================
-       DESKTOP SETTINGS (Screens wider than 768px)
-       ========================================= */
-    @media (min-width: 769px) {
-      .page-wrapper {
-        position: relative;
-        width: 100%; 
-        left: 0; 
-        display: block;
-      }
-      
-      #internal-countdown {
-        position: absolute; 
-        top: 25%; 
-        left: 10%; 
-        width: 80%; 
-        height: 120px; 
-        z-index: 10;
-      }
-    }
-
-    /* =========================================
-       MOBILE SETTINGS (Cell phones only)
-       ========================================= */
-    @media (max-width: 768px) {
-      .page-wrapper {
-        position: relative;
-        width: 130%; 
-        left: -15%;  
-        display: block;
-      }
-
-      #internal-countdown {
-        position: absolute; 
-        top: 24%; 
-        left: 5%; 
-        width: 90%; 
-        height: 100px; 
-        z-index: 10;
-      }
-
-      /* Shrinks the countdown text to fit mobile screens perfectly */
-      .number { font-size: 1.6rem; }
-      .divider { font-size: 1.4rem; margin: 0 4px; padding-bottom: 10px; }
-      .time-segment { min-width: 45px; }
-      .label { font-size: 0.55rem; }
-    }
-  </style>
-</head>
-<body>
-
-  <audio id="bg-music" src="Quinceañera.m4a" loop preload="auto" autoplay></audio>
-
-  <div id="envelope-screen">
-    <div id="envelope-hitbox" 
-         style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; cursor: pointer; z-index: 60;">
-    </div>
-  </div>
-
-  <div id="invitation-content">
-    
-    <div class="page-wrapper">
-      <img src="page1.gif" class="invite-page" alt="Page 1">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page2.gif" class="invite-page" alt="Page 2">
-      <div id="page2-hitbox" 
-           style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; z-index: 50; cursor: pointer;">
-      </div>
-    </div>
-
-    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
-    
-    <div class="page-wrapper">
-      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
-      
-      <div id="internal-countdown">
-        <div class="countdown-wrapper">
-          <div class="time-segment">
-            <span id="days" class="number">00</span>
-            <span class="label">Days</span>
-          </div>
-          <div class="divider">:</div>
-          <div class="time-segment">
-            <span id="hours" class="number">00</span>
-            <span class="label">Hours</span>
-          </div>
-          <div class="divider">:</div>
-          <div class="time-segment">
-            <span id="minutes" class="number">00</span>
-            <span class="label">Minutes</span>
-          </div>
-          <div class="divider">:</div>
-          <div class="time-segment">
-            <span id="seconds" class="number">00</span>
-            <span class="label">Seconds</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page5.gif" class="invite-page" alt="Page 5">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page6.gif" class="invite-page" alt="Page 6">
-      <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
-         style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page7.gif" class="invite-page" alt="Page 7 - RSVP">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
-         style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
-    </div>
-    
-    <div class="page-wrapper">
-      <img src="page8.gif" class="invite-page" alt="Page 8">
-    </div>
-  </div>
-
-  <script>
-    // =========================================
-    // AUDIO CONTROLS & EVENT LISTENERS
-    // =========================================
-    
-    function attemptPlay() {
-      let music = document.getElementById('bg-music');
-      if (music.paused) {
-        let playPromise = music.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log("Audio blocked by device: ", error);
-          });
-        }
-      }
-    }
-
-    // LISTENER 1: Envelope Hitbox
-    document.getElementById('envelope-hitbox').addEventListener('click', function(event) {
-      event.preventDefault(); 
-      attemptPlay();
-      document.getElementById('envelope-screen').style.display = 'none';
-      document.getElementById('invitation-content').style.display = 'block';
-    });
-
-    // LISTENER 2: Aggressive Page 2 Fallback (Listens for both click and mobile touch)
-    const page2Hitbox = document.getElementById('page2-hitbox');
-    const triggerFallbackAudio = function(event) {
-      attemptPlay();
-      page2Hitbox.style.display = 'none'; // Hides instantly so it doesn't block scrolling
-    };
-    page2Hitbox.addEventListener('click', triggerFallbackAudio);
-    page2Hitbox.addEventListener('touchstart', triggerFallbackAudio, {passive: true});
-
-
-    // =========================================
-    // COUNTDOWN TIMER LOGIC
-    // =========================================
-
-    const targetDate = new Date("September 6, 2026 00:00:00").getTime();
-
-    const countdownInterval = setInterval(function() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("days").innerText = days.toString().padStart(2, '0');
-      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-      document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
-
-      if (distance < 0) {
-        clearInterval(countdownInterval);
-        document.getElementById("internal-countdown").innerHTML = "<h2 style='text-align: center; color: #333; background: #fff; padding: 20px; border-radius: 12px;'>The Event is Here!</h2>";
-      }
-    }, 1000);
-  </script>
-
-</body>
-</html>
