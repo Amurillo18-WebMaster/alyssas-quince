@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
   
-  <link rel="preload" href="envelope.png" as="image">
+  <link rel="preload" href="envelope.gif" as="image">
   
   <style>
     body, html {
@@ -22,31 +22,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('envelope.png'); 
+      background-image: url('envelope.gif'); /* Updated to GIF */
       background-size: cover;
       background-position: center;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 50; 
-    }
-
-    @keyframes popOut {
-      0% { transform: scale(0.5); opacity: 0; }
-      70% { transform: scale(1.08); opacity: 1; } 
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    #open-img-btn {
-      width: 81%; 
-      max-width: 540px; 
-      cursor: pointer;
-      transition: transform 0.2s ease-in-out; 
-      animation: popOut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    #open-img-btn:hover {
-      transform: scale(1.08); 
     }
 
     #invitation-content {
@@ -72,14 +54,14 @@
     @media (min-width: 769px) {
       .page-wrapper {
         position: relative;
-        width: 100%; /* No zoom on desktop */
+        width: 100%; 
         left: 0; 
         display: block;
       }
       
       #countdown-widget {
         position: absolute; 
-        top: 28%; /* Places it in the gap below the bow */
+        top: 28%; 
         left: 30%; 
         width: 40%; 
         height: 60px; 
@@ -95,16 +77,16 @@
     @media (max-width: 768px) {
       .page-wrapper {
         position: relative;
-        width: 130%; /* Zooms in by 30% ONLY on mobile */
-        left: -15%;  /* Perfectly re-centers the zoomed image */
+        width: 130%; 
+        left: -15%;  
         display: block;
       }
 
       #countdown-widget {
         position: absolute; 
-        top: 27%; /* Perfectly placed in the empty gap above the crown */
-        left: 25%; /* Centered relative to the zoomed wrapper */
-        width: 50%; /* Gives the numbers room to breathe */
+        top: 27%; 
+        left: 25%; 
+        width: 50%; 
         height: 50px; 
         border: none; 
         background-color: transparent; 
@@ -115,10 +97,12 @@
 </head>
 <body>
 
-  <audio id="bg-music" src="Quinceañera.mp3" loop preload="auto"></audio>
+  <audio id="bg-music" src="Quinceañera.mp3" loop preload="auto" autoplay></audio>
 
   <div id="envelope-screen">
-    <img src="Cordially2.png" id="open-img-btn" alt="You Are Cordially Invited">
+    <div onclick="revealInvite()" 
+         style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; cursor: pointer; z-index: 60;">
+    </div>
   </div>
 
   <div id="invitation-content">
@@ -129,7 +113,13 @@
          style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
-    <div class="page-wrapper"><img src="page2.gif" class="invite-page" alt="Page 2"></div>
+    <div class="page-wrapper">
+      <img src="page2.gif" class="invite-page" alt="Page 2">
+      <div onclick="forceAudio()" 
+           style="position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; cursor: pointer; z-index: 10;">
+      </div>
+    </div>
+
     <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
     
     <div class="page-wrapper">
@@ -159,26 +149,32 @@
   </div>
 
   <script>
-    // This modern listener guarantees iOS and Android recognize the interaction to unlock the audio
-    document.getElementById('open-img-btn').addEventListener('click', function(event) {
-      event.preventDefault();
-      
+    // A shared helper function to attempt audio playback
+    function attemptPlay() {
       let music = document.getElementById('bg-music');
-      
-      // Forces the music to play explicitly upon this click event
-      let playPromise = music.play();
-      if (playPromise !== undefined) {
-        playPromise.then(_ => {
-          console.log("Audio playing successfully.");
-        }).catch(error => {
-          console.log("Audio blocked by strict device settings: ", error);
-        });
+      if (music.paused) {
+        let playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            console.log("Audio playing successfully.");
+          }).catch(error => {
+            console.log("Audio blocked by device: ", error);
+          });
+        }
       }
+    }
 
-      // Hides envelope and reveals the fully zoomed invitation
+    // Triggered when the envelope is tapped
+    function revealInvite() {
+      attemptPlay();
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
-    });
+    }
+
+    // Triggered if the guest taps the center of Page 2
+    function forceAudio() {
+      attemptPlay();
+    }
   </script>
 
 </body>
