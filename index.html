@@ -85,4 +85,102 @@
       #countdown-widget {
         position: absolute; 
         top: 27%; /* Placed in the gap below the bow */
-        left:
+        left: 25%; 
+        width: 50%; 
+        height: 50px; 
+        border: none; 
+        background-color: transparent; 
+        z-index: 10;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bg-music" src="Quinceañera.mp3" loop preload="auto" autoplay></audio>
+
+  <div id="envelope-screen">
+    <div id="envelope-hitbox" 
+         style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; cursor: pointer; z-index: 60;">
+    </div>
+  </div>
+
+  <div id="invitation-content">
+    
+    <div class="page-wrapper">
+      <img src="page1.gif" class="invite-page" alt="Page 1">
+      <a href="google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816193,-117.6390993,17z/data=!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=tts&g_ep=EgoyMDI2MDUyNy4wIPu8ASoASAFQAw%3D%3D&skid=117dca46-58f3-45dd-b147-7cfd5cfa9462" target="_blank" 
+         style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page2.gif" class="invite-page" alt="Page 2">
+      <div onclick="forceAudio()" 
+           style="position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; cursor: pointer; z-index: 10;">
+      </div>
+    </div>
+
+    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
+    
+    <div class="page-wrapper">
+      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
+      <iframe id="countdown-widget" src="https://www.tickcounter.com/widget/countdown/10450526" scrolling="no"></iframe>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page5.gif" class="invite-page" alt="Page 5">
+      <a href="google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816193,-117.6390993,17z/data=!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=tts&g_ep=EgoyMDI2MDUyNy4wIPu8ASoASAFQAw%3D%3D&skid=117dca46-58f3-45dd-b147-7cfd5cfa9462" target="_blank" 
+         style="position: absolute; top: 32%; left: 24%; width: 52%; height: 16%; display: block; z-index: 10;"></a>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page6.gif" class="invite-page" alt="Page 6">
+      <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
+         style="position: absolute; top: 69%; left: 54%; width: 20%; height: 5%; display: block; z-index: 10;"></a>
+    </div>
+
+    <div class="page-wrapper"><img src="page7.gif" class="invite-page" alt="Page 7"></div>
+    
+    <div class="page-wrapper">
+      <img src="page8.gif" class="invite-page" alt="Page 8 - RSVP">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
+         style="position: absolute; top: 85%; left: 40%; width: 20%; height: 10%; display: block; z-index: 10;"></a>
+    </div>
+  </div>
+
+  <script>
+    // Shared helper function to attempt audio playback
+    function attemptPlay() {
+      let music = document.getElementById('bg-music');
+      if (music.paused) {
+        let playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            console.log("Audio playing successfully.");
+          }).catch(error => {
+            console.log("Audio blocked by device: ", error);
+          });
+        }
+      }
+    }
+
+    // STRICT DUAL-PURPOSE LISTENER: Triggers when the envelope hitbox is tapped
+    document.getElementById('envelope-hitbox').addEventListener('click', function(event) {
+      event.preventDefault(); // Stops any default mobile browser tap behaviors
+      
+      // 1. Force the music to play
+      attemptPlay();
+
+      // 2. Hide the envelope and show the invitation
+      document.getElementById('envelope-screen').style.display = 'none';
+      document.getElementById('invitation-content').style.display = 'block';
+    });
+
+    // FALLBACK LISTENER: Triggered if the guest taps the center of Page 2
+    function forceAudio() {
+      attemptPlay();
+    }
+  </script>
+
+</body>
+</html>
