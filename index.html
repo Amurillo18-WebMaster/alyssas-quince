@@ -58,11 +58,10 @@
     .countdown-title {
       font-family: 'Great Vibes', cursive;
       color: #333; /* If this is too dark against your background, change to #fff */
-      font-size: 3rem; /* Increased size so the script font is readable */
+      font-size: 2.4rem; /* Reduced by 20% from 3rem */
       font-weight: normal;
       margin: 0 0 5px 0;
       text-align: center;
-      /* Notice: Uppercase and wide letter-spacing were removed for the cursive font */
     }
 
     .countdown-wrapper {
@@ -159,7 +158,7 @@
       }
 
       /* Shrinks the text to fit mobile screens perfectly */
-      .countdown-title { font-size: 2.2rem; margin-bottom: 0px; }
+      .countdown-title { font-size: 1.75rem; margin-bottom: 0px; } /* Reduced by 20% from 2.2rem */
       .number { font-size: 1.6rem; }
       .divider { font-size: 1.4rem; margin: 0 4px; padding-bottom: 10px; }
       .time-segment { min-width: 45px; }
@@ -192,123 +191,4 @@
       </div>
     </div>
 
-    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
-    
-    <div class="page-wrapper">
-      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
-      
-      <div id="internal-countdown">
-        <h2 class="countdown-title">Alyssa Sophia's Quinceañera</h2>
-        
-        <div class="countdown-wrapper">
-          <div class="time-segment">
-            <span id="days" class="number">00</span>
-            <span class="label">Days</span>
-          </div>
-          <div class="divider">:</div>
-          <div class="time-segment">
-            <span id="hours" class="number">00</span>
-            <span class="label">Hours</span>
-          </div>
-          <div class="divider">:</div>
-          <div class="time-segment">
-            <span id="minutes" class="number">00</span>
-            <span class="label">Minutes</span>
-          </div>
-          <div class="divider">:</div>
-          <div class="time-segment">
-            <span id="seconds" class="number">00</span>
-            <span class="label">Seconds</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page5.gif" class="invite-page" alt="Page 5">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page6.gif" class="invite-page" alt="Page 6">
-      <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
-         style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page7.gif" class="invite-page" alt="Page 7 - RSVP">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
-         style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
-    </div>
-    
-    <div class="page-wrapper">
-      <img src="page8.gif" class="invite-page" alt="Page 8">
-    </div>
-  </div>
-
-  <script>
-    // =========================================
-    // AUDIO CONTROLS & EVENT LISTENERS
-    // =========================================
-    
-    function attemptPlay() {
-      let music = document.getElementById('bg-music');
-      if (music.paused) {
-        let playPromise = music.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log("Audio blocked by device: ", error);
-          });
-        }
-      }
-    }
-
-    // LISTENER 1: Envelope Hitbox
-    document.getElementById('envelope-hitbox').addEventListener('click', function(event) {
-      event.preventDefault(); 
-      attemptPlay();
-      document.getElementById('envelope-screen').style.display = 'none';
-      document.getElementById('invitation-content').style.display = 'block';
-    });
-
-    // LISTENER 2: Aggressive Page 2 Fallback (Listens for both click and mobile touch)
-    const page2Hitbox = document.getElementById('page2-hitbox');
-    const triggerFallbackAudio = function(event) {
-      attemptPlay();
-      page2Hitbox.style.display = 'none'; 
-    };
-    page2Hitbox.addEventListener('click', triggerFallbackAudio);
-    page2Hitbox.addEventListener('touchstart', triggerFallbackAudio, {passive: true});
-
-
-    // =========================================
-    // COUNTDOWN TIMER LOGIC
-    // =========================================
-
-    const targetDate = new Date("September 6, 2026 00:00:00").getTime();
-
-    const countdownInterval = setInterval(function() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("days").innerText = days.toString().padStart(2, '0');
-      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-      document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
-
-      if (distance < 0) {
-        clearInterval(countdownInterval);
-        document.getElementById("internal-countdown").innerHTML = "<h2 style='text-align: center; color: #333; font-family: \"Great Vibes\", cursive; background: transparent; padding: 20px; font-size: 3rem; font-weight: normal; margin: 0;'>The Event is Here!</h2>";
-      }
-    }, 1000);
-  </script>
-
-</body>
-</html>
+    <div class="page-wrapper"><img src="page3.gif" class="invite-page"
