@@ -59,12 +59,13 @@
         display: block;
       }
       
+      /* TickCounter - Desktop (Doubled Size) */
       #countdown-widget {
         position: absolute; 
-        top: 28%; 
-        left: 30%; 
-        width: 40%; 
-        height: 60px; 
+        top: 25%; 
+        left: 10%; 
+        width: 80%; 
+        height: 120px; 
         border: none; 
         background-color: transparent; 
         z-index: 10;
@@ -82,12 +83,13 @@
         display: block;
       }
 
+      /* TickCounter - Mobile (Doubled Size, Zoom Adjusted) */
       #countdown-widget {
         position: absolute; 
-        top: 27%; 
-        left: 25%; 
-        width: 50%; 
-        height: 50px; 
+        top: 24%; 
+        left: 0%; 
+        width: 100%; 
+        height: 100px; 
         border: none; 
         background-color: transparent; 
         z-index: 10;
@@ -109,7 +111,7 @@
     
     <div class="page-wrapper">
       <img src="page1.gif" class="invite-page" alt="Page 1">
-      <a href="google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816193,-117.6390993,17z/data=!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=tts&g_ep=EgoyMDI2MDUyNy4wIPu8ASoASAFQAw%3D%3D&skid=117dca46-58f3-45dd-b147-7cfd5cfa9462" target="_blank" 
+      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
          style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
@@ -129,27 +131,29 @@
 
     <div class="page-wrapper">
       <img src="page5.gif" class="invite-page" alt="Page 5">
-      <a href="google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816193,-117.6390993,17z/data=!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=tts&g_ep=EgoyMDI2MDUyNy4wIPu8ASoASAFQAw%3D%3D&skid=117dca46-58f3-45dd-b147-7cfd5cfa9462" target="_blank" 
-         style="position: absolute; top: 32%; left: 24%; width: 52%; height: 16%; display: block; z-index: 10;"></a>
+      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
+         style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
     </div>
 
     <div class="page-wrapper">
       <img src="page6.gif" class="invite-page" alt="Page 6">
       <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
-         style="position: absolute; top: 69%; left: 54%; width: 20%; height: 5%; display: block; z-index: 10;"></a>
+         style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
-    <div class="page-wrapper"><img src="page7.gif" class="invite-page" alt="Page 7"></div>
+    <div class="page-wrapper">
+      <img src="page7.gif" class="invite-page" alt="Page 7 - RSVP">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
+         style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
+    </div>
     
     <div class="page-wrapper">
-      <img src="page8.gif" class="invite-page" alt="Page 8 - RSVP">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
-         style="position: absolute; top: 85%; left: 40%; width: 20%; height: 10%; display: block; z-index: 10;"></a>
+      <img src="page8.gif" class="invite-page" alt="Page 8">
     </div>
   </div>
 
   <script>
-    // Shared helper function to attempt audio playback
+    // Shared audio helper
     function attemptPlay() {
       let music = document.getElementById('bg-music');
       if (music.paused) {
@@ -164,7 +168,7 @@
       }
     }
 
-    // STRICT LISTENER 1: Triggers when the envelope hitbox is tapped
+    // STRICT LISTENER 1: Envelope Hitbox
     document.getElementById('envelope-hitbox').addEventListener('click', function(event) {
       event.preventDefault(); 
       attemptPlay();
@@ -172,11 +176,10 @@
       document.getElementById('invitation-content').style.display = 'block';
     });
 
-    // STRICT LISTENER 2: Triggers when anywhere on Page 2 is tapped
+    // STRICT LISTENER 2: Page 2 Fallback
     document.getElementById('page2-hitbox').addEventListener('click', function(event) {
       attemptPlay();
-      // Optional: hide the hitbox after it's clicked so it doesn't block scrolling or other interactions
-      this.style.display = 'none';
+      this.style.display = 'none'; // Hides itself after one tap so it doesn't block scrolling
     });
   </script>
 
