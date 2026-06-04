@@ -115,8 +115,8 @@
 
     <div class="page-wrapper">
       <img src="page2.gif" class="invite-page" alt="Page 2">
-      <div onclick="forceAudio()" 
-           style="position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; cursor: pointer; z-index: 10;">
+      <div id="page2-hitbox" 
+           style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; z-index: 10;">
       </div>
     </div>
 
@@ -149,14 +149,14 @@
   </div>
 
   <script>
-    // Shared helper function for the Page 2 Fallback
+    // Shared helper function to attempt audio playback
     function attemptPlay() {
       let music = document.getElementById('bg-music');
       if (music.paused) {
         let playPromise = music.play();
         if (playPromise !== undefined) {
           playPromise.then(_ => {
-            console.log("Audio playing successfully from fallback.");
+            console.log("Audio playing successfully.");
           }).catch(error => {
             console.log("Audio blocked by device: ", error);
           });
@@ -164,33 +164,20 @@
       }
     }
 
-    // STRICT DUAL-PURPOSE LISTENER for the Envelope Hitbox
+    // STRICT LISTENER 1: Triggers when the envelope hitbox is tapped
     document.getElementById('envelope-hitbox').addEventListener('click', function(event) {
       event.preventDefault(); 
-      
-      // DUAL PURPOSE ACTION 1: Force the music to play
-      let music = document.getElementById('bg-music');
-      let playPromise = music.play();
-      
-      // This catches any weird errors if a device still tries to block it
-      if (playPromise !== undefined) {
-        playPromise.then(_ => {
-          console.log("Audio playing successfully.");
-        }).catch(error => {
-          console.log("Audio still blocked: ", error);
-        });
-      }
-
-      // DUAL PURPOSE ACTION 2: Hide the envelope and show the invitation
+      attemptPlay();
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
-      
     });
 
-    // FALLBACK LISTENER: Triggered if the guest taps the center of Page 2
-    function forceAudio() {
+    // STRICT LISTENER 2: Triggers when anywhere on Page 2 is tapped
+    document.getElementById('page2-hitbox').addEventListener('click', function(event) {
       attemptPlay();
-    }
+      // Optional: hide the hitbox after it's clicked so it doesn't block scrolling or other interactions
+      this.style.display = 'none';
+    });
   </script>
 
 </body>
