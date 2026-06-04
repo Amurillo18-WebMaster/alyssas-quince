@@ -77,14 +77,14 @@
     @media (max-width: 768px) {
       .page-wrapper {
         position: relative;
-        width: 130%; /* Zooms in by 30% ONLY on mobile */
-        left: -15%;  /* Perfectly re-centers the zoomed image */
+        width: 130%; 
+        left: -15%;  
         display: block;
       }
 
       #countdown-widget {
         position: absolute; 
-        top: 27%; /* Placed in the gap below the bow */
+        top: 27%; 
         left: 25%; 
         width: 50%; 
         height: 50px; 
@@ -149,14 +149,14 @@
   </div>
 
   <script>
-    // Shared helper function to attempt audio playback
+    // Shared helper function for the Page 2 Fallback
     function attemptPlay() {
       let music = document.getElementById('bg-music');
       if (music.paused) {
         let playPromise = music.play();
         if (playPromise !== undefined) {
           playPromise.then(_ => {
-            console.log("Audio playing successfully.");
+            console.log("Audio playing successfully from fallback.");
           }).catch(error => {
             console.log("Audio blocked by device: ", error);
           });
@@ -164,16 +164,27 @@
       }
     }
 
-    // STRICT DUAL-PURPOSE LISTENER: Triggers when the envelope hitbox is tapped
+    // STRICT DUAL-PURPOSE LISTENER for the Envelope Hitbox
     document.getElementById('envelope-hitbox').addEventListener('click', function(event) {
-      event.preventDefault(); // Stops any default mobile browser tap behaviors
+      event.preventDefault(); 
       
-      // 1. Force the music to play
-      attemptPlay();
+      // DUAL PURPOSE ACTION 1: Force the music to play
+      let music = document.getElementById('bg-music');
+      let playPromise = music.play();
+      
+      // This catches any weird errors if a device still tries to block it
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          console.log("Audio playing successfully.");
+        }).catch(error => {
+          console.log("Audio still blocked: ", error);
+        });
+      }
 
-      // 2. Hide the envelope and show the invitation
+      // DUAL PURPOSE ACTION 2: Hide the envelope and show the invitation
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
+      
     });
 
     // FALLBACK LISTENER: Triggered if the guest taps the center of Page 2
