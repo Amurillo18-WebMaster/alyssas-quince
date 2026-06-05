@@ -84,11 +84,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6); /* Dark overlay */
-      display: none; /* Hidden until envelope is opened */
+      background: rgba(0, 0, 0, 0.6); 
+      display: none; 
       justify-content: center;
       align-items: center;
-      z-index: 100; /* Stays on top of everything */
+      z-index: 100; 
       opacity: 0;
       transition: opacity 0.4s ease;
     }
@@ -261,7 +261,7 @@
 </head>
 <body>
 
-  <audio id="bg-music" src="quinceanera.m4a" loop playsinline preload="auto"></audio>
+  <audio id="bg-music" src="music.m4a" loop playsinline preload="auto"></audio>
 
   <div id="audio-popup">
     <div class="audio-modal">
@@ -336,51 +336,54 @@
 
   <script>
     // =========================================
-    // EXPLICIT CONSENT AUDIO ENGINE
+    // EXPLICIT CONSENT AUDIO ENGINE WITH 10s START
     // =========================================
 
-    // 1. Opens envelope and instantly triggers the pop-up
     function openEnvelope() {
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
       
-      // Trigger the pop-up
       var popup = document.getElementById('audio-popup');
       popup.style.display = 'flex';
       
-      // Slight delay to allow CSS transition to fade it in smoothly
       setTimeout(function() {
         popup.style.opacity = '1';
       }, 50);
     }
 
-    // 2. The explicit user action that Safari/Chrome loves
     function acceptMusic() {
       var music = document.getElementById('bg-music');
       var p2Btn = document.getElementById('page2-hitbox');
 
       if (music) {
+        // Sets to maximum allowed browser volume
+        music.volume = 1.0; 
+        
+        // Starts the song exactly at the 10-second mark
+        music.currentTime = 10; 
+
         music.play().then(function() {
-          console.log("Explicit consent granted. Music is playing!");
-          // Hide the fallback button on Page 2 since music is already working
+          console.log("Music is playing!");
           if(p2Btn) {
             p2Btn.style.opacity = '0';
             p2Btn.style.pointerEvents = 'none';
           }
         }).catch(function(error) {
-          console.log("Audio still blocked: ", error);
+          // THIS IS THE DEBUGGING ALARM!
+          // If you see this popup on your screen, the file is missing from GitHub!
+          alert("Audio file could not load! Please verify 'music.m4a' is uploaded correctly to GitHub.");
+          console.log("Audio Error: ", error);
         });
       }
       closeAudioPopup();
     }
 
-    // 3. Gracefully close the popup
     function closeAudioPopup() {
       var popup = document.getElementById('audio-popup');
       popup.style.opacity = '0';
       setTimeout(function() {
         popup.style.display = 'none';
-      }, 400); // Matches the CSS transition time
+      }, 400); 
     }
 
     // =========================================
