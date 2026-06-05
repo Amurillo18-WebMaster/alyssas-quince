@@ -50,7 +50,6 @@
       margin: 0;
       padding: 0;
       border: none;
-      background-color: #fcfcfc; /* Hides empty space before GIF loads */
     }
 
     .invisible-btn {
@@ -61,11 +60,11 @@
       padding: 0;
       margin: 0;
       -webkit-tap-highlight-color: transparent;
-      transition: opacity 0.5s ease; 
+      transition: opacity 0.3s ease; 
     }
 
     /* =========================================
-       UPDATED GOLD GRADIENT TEXT
+       GOLD GRADIENT TEXT CLASS
        ========================================= */
     .gold-gradient {
       background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%);
@@ -196,7 +195,7 @@
   <audio id="bg-music" src="Quinceañera.m4a" loop playsinline preload="auto"></audio>
 
   <div id="envelope-screen">
-    <button id="envelope-hitbox" class="invisible-btn"
+    <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()"
             style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; z-index: 60;">
     </button>
   </div>
@@ -204,25 +203,25 @@
   <div id="invitation-content">
     
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page1.gif" class="invite-page lazy-gif" alt="Page 1">
+      <img src="page1.gif" class="invite-page" alt="Page 1">
       <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
          style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page2.gif" class="invite-page lazy-gif" alt="Page 2">
-      <button id="page2-hitbox" class="invisible-btn"
+      <img src="page2.gif" class="invite-page" alt="Page 2">
+      <button id="page2-hitbox" class="invisible-btn" onclick="forcePlayMusic(this)"
               style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; z-index: 50; display: flex; justify-content: center; align-items: center; flex-direction: column;">
         <h2 class="countdown-title gold-gradient" style="margin: 0;">Tap to Play</h2>
       </button>
     </div>
 
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page3.gif" class="invite-page lazy-gif" alt="Page 3">
+      <img src="page3.gif" class="invite-page" alt="Page 3">
     </div>
     
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page4.gif" class="invite-page lazy-gif" alt="Page 4 - Countdown">
+      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
       
       <div id="internal-countdown">
         <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
@@ -239,107 +238,79 @@
     </div>
 
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page5.gif" class="invite-page lazy-gif" alt="Page 5">
+      <img src="page5.gif" class="invite-page" alt="Page 5">
       <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
          style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
     </div>
 
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page6.gif" class="invite-page lazy-gif" alt="Page 6">
+      <img src="page6.gif" class="invite-page" alt="Page 6">
       <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
          style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page7.gif" class="invite-page lazy-gif" alt="Page 7 - RSVP">
+      <img src="page7.gif" class="invite-page" alt="Page 7 - RSVP">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
          style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
     </div>
     
     <div class="page-wrapper">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page8.gif" class="invite-page lazy-gif" alt="Page 8">
+      <img src="page8.gif" class="invite-page" alt="Page 8">
     </div>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      
-      // =========================================
-      // 1. AUDIO & TRANSITION ENGINE (Bulletproofed)
-      // =========================================
+    // =========================================
+    // THE BULLETPROOF AUDIO ENGINE
+    // =========================================
+    
+    // This function forces the music to play.
+    function forcePlayMusic(buttonElement) {
       var music = document.getElementById('bg-music');
-      var envScreen = document.getElementById('envelope-screen');
-      var inviteContent = document.getElementById('invitation-content');
-      var envBtn = document.getElementById('envelope-hitbox');
-      var p2Btn = document.getElementById('page2-hitbox');
       
-      let audioIsPlaying = false;
-
-      // The ultimate function to force audio
-      function startMusic() {
-        if (!audioIsPlaying && music) {
-          let playPromise = music.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              audioIsPlaying = true;
-              if (p2Btn) {
-                p2Btn.style.opacity = '0';
-                p2Btn.style.pointerEvents = 'none'; // Makes it disappear so you can scroll
-              }
-            }).catch(error => {
-              console.log("Waiting for global touch...", error);
-            });
-          }
+      // Tell the browser to play
+      if (music && music.paused) {
+        var playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.then(function() {
+            console.log("Music is playing!");
+          }).catch(function(error) {
+            console.log("Browser blocked audio: ", error);
+          });
         }
       }
 
-      // Action 1: Envelope tapped
-      function openEnvelope(e) {
-        if(e) e.preventDefault();
-        if (envScreen) envScreen.style.display = 'none';
-        if (inviteContent) inviteContent.style.display = 'block';
-        startMusic();
+      // If a button was clicked (like Page 2), make it disappear so they can scroll
+      if (buttonElement) {
+        buttonElement.style.opacity = '0';
+        buttonElement.style.pointerEvents = 'none';
       }
+    }
 
-      if (envBtn) {
-        envBtn.addEventListener('click', openEnvelope);
-        envBtn.addEventListener('touchstart', openEnvelope, {passive: false});
+    // This function handles the Envelope click
+    function openEnvelope() {
+      // Hide Envelope, Show Invitation
+      document.getElementById('envelope-screen').style.display = 'none';
+      document.getElementById('invitation-content').style.display = 'block';
+      
+      // Attempt to play music instantly
+      forcePlayMusic(null);
+    }
+
+    // Global Fallback: The absolute very first time they touch the screen ANYWHERE, try to play music.
+    document.body.addEventListener('touchstart', function() {
+      var music = document.getElementById('bg-music');
+      if (music && music.paused) {
+        music.play().catch(function(e){});
       }
-
-      // Action 2: The Global "Any Swipe" Unlocker 
-      // If the envelope fails, the VERY NEXT time they touch the screen to scroll, the music fires.
-      document.body.addEventListener('touchstart', startMusic, {passive: true});
-      document.body.addEventListener('click', startMusic, {passive: true});
+    }, { once: true, passive: true });
 
 
-      // =========================================
-      // 2. GIF LAZY LOADER (Play exactly when seen)
-      // =========================================
-      if ('IntersectionObserver' in window) {
-        const gifObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target;
-              if (img.dataset.src) {
-                // Swap the blank placeholder for the actual GIF so it starts from frame 1
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src'); // Prevent it from reloading again
-                observer.unobserve(img); // Stop watching it once loaded
-              }
-            }
-          });
-        }, { 
-          rootMargin: "0px 0px 50px 0px" // Loads the GIF just slightly before it enters the screen
-        });
-
-        document.querySelectorAll('.lazy-gif').forEach(img => {
-          gifObserver.observe(img);
-        });
-      }
-
-      // =========================================
-      // 3. COUNTDOWN TIMER LOGIC
-      // =========================================
+    // =========================================
+    // COUNTDOWN TIMER LOGIC
+    // =========================================
+    document.addEventListener("DOMContentLoaded", function() {
       try {
         var targetDate = new Date("September 6, 2026 00:00:00").getTime();
 
@@ -371,7 +342,6 @@
       } catch(err) {
         console.log("Countdown timer error: ", err);
       }
-
     });
   </script>
 
