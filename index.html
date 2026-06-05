@@ -50,6 +50,7 @@
       margin: 0;
       padding: 0;
       border: none;
+      background-color: #fcfcfc; /* Hides empty space before GIF loads */
     }
 
     .invisible-btn {
@@ -60,21 +61,19 @@
       padding: 0;
       margin: 0;
       -webkit-tap-highlight-color: transparent;
-      transition: opacity 0.2s ease; /* Smoothly fades out instead of abruptly deleting */
+      transition: opacity 0.5s ease; 
     }
 
     /* =========================================
-       GOLD GRADIENT TEXT CLASS
+       UPDATED GOLD GRADIENT TEXT
        ========================================= */
     .gold-gradient {
-      /* Replicates the shiny metallic gold from "The Details" */
-      background: linear-gradient(135deg, #a67c00 0%, #bf953f 25%, #fcf6ba 50%, #b38728 75%, #fdffcc 100%);
+      background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       color: transparent;
-      /* We use filter instead of text-shadow for gradient text */
-      filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.8));
+      filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4));
     }
 
     /* =========================================
@@ -110,8 +109,8 @@
     }
 
     .number {
-      font-family: 'Great Vibes', cursive; /* Applied Great Vibes to numbers */
-      font-size: 3rem; /* Increased because cursive numbers run small */
+      font-family: 'Great Vibes', cursive; 
+      font-size: 3rem; 
       font-weight: normal;
       line-height: 1;
       letter-spacing: 2px;
@@ -119,6 +118,7 @@
     }
 
     .label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -172,7 +172,7 @@
 
       #internal-countdown {
         position: absolute; 
-        top: 24%; /* Moved down by 5% (was 19%) */
+        top: 24%; 
         left: 0%; 
         width: 100%; 
         height: 100px; 
@@ -183,11 +183,10 @@
         justify-content: center;
       }
 
-      /* Enlarged elements by ~20% */
       .countdown-title { font-size: 2.1rem; margin-bottom: 0px; } 
       .number { font-size: 2.2rem; } 
       .divider { font-size: 1.8rem; margin: 0 4px; padding-bottom: 20px; }
-      .time-segment { min-width: 55px; } /* Widened to fit larger font */
+      .time-segment { min-width: 55px; } 
       .label { font-size: 0.65rem; } 
     }
   </style>
@@ -205,58 +204,60 @@
   <div id="invitation-content">
     
     <div class="page-wrapper">
-      <img src="page1.gif" class="invite-page" alt="Page 1">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page1.gif" class="invite-page lazy-gif" alt="Page 1">
       <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
          style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
     <div class="page-wrapper">
-      <img src="page2.gif" class="invite-page" alt="Page 2">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page2.gif" class="invite-page lazy-gif" alt="Page 2">
       <button id="page2-hitbox" class="invisible-btn"
               style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; z-index: 50; display: flex; justify-content: center; align-items: center; flex-direction: column;">
         <h2 class="countdown-title gold-gradient" style="margin: 0;">Tap to Play</h2>
       </button>
     </div>
 
-    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
+    <div class="page-wrapper">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page3.gif" class="invite-page lazy-gif" alt="Page 3">
+    </div>
     
     <div class="page-wrapper">
-      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page4.gif" class="invite-page lazy-gif" alt="Page 4 - Countdown">
       
       <div id="internal-countdown">
         <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
         <div class="countdown-wrapper">
-          <div class="time-segment"><span id="days" class="number">00</span><span class="label">Days</span></div>
-          <div class="divider">:</div>
-          <div class="time-segment"><span id="hours" class="number">00</span><span class="label">Hours</span></div>
-          <div class="divider">:</div>
-          <div class="time-segment"><span id="minutes" class="number">00</span><span class="label">Minutes</span></div>
-          <div class="divider">:</div>
-          <div class="time-segment"><span id="seconds" class="number">00</span><span class="label">Seconds</span></div>
+          <div class="time-segment"><span id="days" class="number gold-gradient">00</span><span class="label">Days</span></div>
+          <div class="divider gold-gradient">:</div>
+          <div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span class="label">Hours</span></div>
+          <div class="divider gold-gradient">:</div>
+          <div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span class="label">Minutes</span></div>
+          <div class="divider gold-gradient">:</div>
+          <div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span class="label">Seconds</span></div>
         </div>
       </div>
     </div>
 
     <div class="page-wrapper">
-      <img src="page5.gif" class="invite-page" alt="Page 5">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page5.gif" class="invite-page lazy-gif" alt="Page 5">
       <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
          style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
     </div>
 
     <div class="page-wrapper">
-      <img src="page6.gif" class="invite-page" alt="Page 6">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page6.gif" class="invite-page lazy-gif" alt="Page 6">
       <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
          style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
     </div>
 
     <div class="page-wrapper">
-      <img src="page7.gif" class="invite-page" alt="Page 7 - RSVP">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page7.gif" class="invite-page lazy-gif" alt="Page 7 - RSVP">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
          style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
     </div>
     
     <div class="page-wrapper">
-      <img src="page8.gif" class="invite-page" alt="Page 8">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="page8.gif" class="invite-page lazy-gif" alt="Page 8">
     </div>
   </div>
 
@@ -264,46 +265,80 @@
     document.addEventListener("DOMContentLoaded", function() {
       
       // =========================================
-      // AUDIO & TRANSITION ENGINE
+      // 1. AUDIO & TRANSITION ENGINE (Bulletproofed)
       // =========================================
       var music = document.getElementById('bg-music');
       var envScreen = document.getElementById('envelope-screen');
       var inviteContent = document.getElementById('invitation-content');
       var envBtn = document.getElementById('envelope-hitbox');
       var p2Btn = document.getElementById('page2-hitbox');
+      
+      let audioIsPlaying = false;
 
-      // 1. Envelope Tap
+      // The ultimate function to force audio
+      function startMusic() {
+        if (!audioIsPlaying && music) {
+          let playPromise = music.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              audioIsPlaying = true;
+              if (p2Btn) {
+                p2Btn.style.opacity = '0';
+                p2Btn.style.pointerEvents = 'none'; // Makes it disappear so you can scroll
+              }
+            }).catch(error => {
+              console.log("Waiting for global touch...", error);
+            });
+          }
+        }
+      }
+
+      // Action 1: Envelope tapped
+      function openEnvelope(e) {
+        if(e) e.preventDefault();
+        if (envScreen) envScreen.style.display = 'none';
+        if (inviteContent) inviteContent.style.display = 'block';
+        startMusic();
+      }
+
       if (envBtn) {
-        envBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (envScreen) envScreen.style.display = 'none';
-          if (inviteContent) inviteContent.style.display = 'block';
-          
-          if (music && music.paused) {
-            music.play().catch(function(err) { console.log("Audio blocked: ", err); });
-          }
-        });
+        envBtn.addEventListener('click', openEnvelope);
+        envBtn.addEventListener('touchstart', openEnvelope, {passive: false});
       }
 
-      // 2. Page 2 "Tap to Play" Fallback (Fixed to guarantee audio launch)
-      if (p2Btn) {
-        p2Btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          // Instead of "display: none", we make it transparent and unclickable. 
-          // This stops the browser from cancelling the audio request mid-process!
-          this.style.opacity = '0';
-          this.style.pointerEvents = 'none'; 
-          
-          if (music && music.paused) {
-            music.play().catch(function(err) { console.log("Audio blocked: ", err); });
-          }
-        });
-      }
+      // Action 2: The Global "Any Swipe" Unlocker 
+      // If the envelope fails, the VERY NEXT time they touch the screen to scroll, the music fires.
+      document.body.addEventListener('touchstart', startMusic, {passive: true});
+      document.body.addEventListener('click', startMusic, {passive: true});
 
 
       // =========================================
-      // COUNTDOWN TIMER LOGIC
+      // 2. GIF LAZY LOADER (Play exactly when seen)
+      // =========================================
+      if ('IntersectionObserver' in window) {
+        const gifObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                // Swap the blank placeholder for the actual GIF so it starts from frame 1
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src'); // Prevent it from reloading again
+                observer.unobserve(img); // Stop watching it once loaded
+              }
+            }
+          });
+        }, { 
+          rootMargin: "0px 0px 50px 0px" // Loads the GIF just slightly before it enters the screen
+        });
+
+        document.querySelectorAll('.lazy-gif').forEach(img => {
+          gifObserver.observe(img);
+        });
+      }
+
+      // =========================================
+      // 3. COUNTDOWN TIMER LOGIC
       // =========================================
       try {
         var targetDate = new Date("September 6, 2026 00:00:00").getTime();
