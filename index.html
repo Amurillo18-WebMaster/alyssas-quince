@@ -52,13 +52,24 @@
       border: none;
     }
 
+    /* Invisible Button Reset CSS */
+    .invisible-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     /* =========================================
        CUSTOM COUNTDOWN WIDGET STYLES
        ========================================= */
     .countdown-title {
       font-family: 'Great Vibes', cursive;
-      color: #333; /* If this is too dark against your background, change to #fff */
-      font-size: 2.4rem; /* Reduced by 20% from 3rem */
+      color: #333; /* Change to #fff if it is too dark against your background */
+      font-size: 2.4rem; 
       font-weight: normal;
       margin: 0 0 5px 0;
       text-align: center;
@@ -109,7 +120,7 @@
     }
 
     /* =========================================
-       DESKTOP SETTINGS (Screens wider than 768px)
+       DESKTOP SETTINGS
        ========================================= */
     @media (min-width: 769px) {
       .page-wrapper {
@@ -134,7 +145,7 @@
     }
 
     /* =========================================
-       MOBILE SETTINGS (Cell phones only)
+       MOBILE SETTINGS
        ========================================= */
     @media (max-width: 768px) {
       .page-wrapper {
@@ -149,46 +160,4 @@
         top: 24%; 
         left: 0%; 
         width: 100%; 
-        height: 100px; 
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-
-      /* Shrinks the text to fit mobile screens perfectly */
-      .countdown-title { font-size: 1.75rem; margin-bottom: 0px; } /* Reduced by 20% from 2.2rem */
-      .number { font-size: 1.6rem; }
-      .divider { font-size: 1.4rem; margin: 0 4px; padding-bottom: 10px; }
-      .time-segment { min-width: 45px; }
-      .label { font-size: 0.55rem; }
-    }
-  </style>
-</head>
-<body>
-
-  <audio id="bg-music" src="Quinceañera.m4a" loop preload="auto" autoplay></audio>
-
-  <div id="envelope-screen">
-    <div id="envelope-hitbox" 
-         style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; cursor: pointer; z-index: 60;">
-    </div>
-  </div>
-
-  <div id="invitation-content">
-    
-    <div class="page-wrapper">
-      <img src="page1.gif" class="invite-page" alt="Page 1">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page2.gif" class="invite-page" alt="Page 2">
-      <div id="page2-hitbox" 
-           style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; z-index: 50; cursor: pointer;">
-      </div>
-    </div>
-
-    <div class="page-wrapper"><img src="page3.gif" class="invite-page"
+        height: 100px;
