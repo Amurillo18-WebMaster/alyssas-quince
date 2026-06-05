@@ -97,4 +97,51 @@
     }
 
     .number {
-      font
+      font-size: 2.2rem;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888; 
+      margin-top: 6px;
+    }
+
+    .divider {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: #ccc;
+      margin: 0 8px;
+      padding-bottom: 15px;
+    }
+
+    /* =========================================
+       DESKTOP SETTINGS
+       ========================================= */
+    @media (min-width: 769px) {
+      .page-wrapper {
+        position: relative;
+        width: 100%; 
+        left: 0; 
+        display: block;
+      }
+      
+      #internal-countdown {
+        position: absolute; 
+        top: 20%; 
+        left: 10%; 
+        width: 80%; 
+        height: 120px; 
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* =================================
