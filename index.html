@@ -76,17 +76,17 @@
     }
 
     /* =========================================
-       FLOATING MUSIC BUTTON (Now a White Circle)
+       FLOATING MUSIC BUTTON (Scaled Down 20%)
        ========================================= */
     #floating-music-btn {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      width: 100px; 
-      height: 100px; 
-      background: #ffffff; /* Solid white background */
-      border-radius: 50%; /* Makes it a perfect circle */
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Button shadow */
+      width: 80px; /* Shrunk from 100px */
+      height: 80px; /* Shrunk from 100px */
+      background: #ffffff; 
+      border-radius: 50%; 
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
       z-index: 9999;
       cursor: pointer;
       display: none; 
@@ -95,26 +95,26 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Icons increased by ~5% (94px to 99px) and locked to the exact center */
+    /* Shrunk to match the new 80px container */
     #play-pause-img {
       position: absolute;
       top: 50%; 
       left: 50%;
-      transform: translate(-50%, -50%); /* Dead-center alignment */
-      width: 99px;
-      height: 99px;
+      transform: translate(-50%, -50%); 
+      width: 80px;
+      height: 80px;
       object-fit: contain; 
       z-index: 1;
     }
 
-    /* Video locked to the exact same center position as the icon */
+    /* Shrunk by 15%, then another 20% (75px down to 51px) */
     #dancing-video {
       position: absolute;
       top: 50%; 
       left: 50%;
-      transform: translate(-50%, -50%); /* Dead-center alignment */
-      width: 75px;
-      height: 75px;
+      transform: translate(-50%, -50%); 
+      width: 51px;
+      height: 51px;
       object-fit: cover;
       background-color: transparent;
       mix-blend-mode: multiply; 
