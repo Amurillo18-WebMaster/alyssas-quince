@@ -330,9 +330,15 @@
       
       // 3. Unhide the floating music player
       document.getElementById('floating-music-btn').style.display = 'block';
+
+      // 4. Trigger the cinematic auto-scroll
+      startAutoScroll();
     }
 
     function toggleFloatingMusic() {
+      // If they click the music button, we also count that as an interaction to stop scrolling
+      stopAutoScroll(); 
+      
       var music = document.getElementById('bg-music');
       if (music.paused) {
         music.play().catch(function(error) {
@@ -360,6 +366,50 @@
         });
       }
     });
+
+    // =========================================
+    // CINEMATIC AUTO-SCROLL ENGINE
+    // =========================================
+    let autoScrollReq;
+    let isUserInteracting = false;
+
+    function startAutoScroll() {
+      // Wait exactly 2.5 seconds before scrolling so they can read the top page
+      setTimeout(function() {
+        if (isUserInteracting) return; 
+        
+        function scrollStep() {
+          if (isUserInteracting) return; // Halt instantly if the user takes over
+          
+          // Scrolls down 1 pixel per frame for a smooth, slow cinematic pan
+          window.scrollBy(0, 1); 
+          
+          // Automatically stop if the site reaches the absolute bottom
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+            isUserInteracting = true;
+            return;
+          }
+          
+          autoScrollReq = window.requestAnimationFrame(scrollStep);
+        }
+        
+        autoScrollReq = window.requestAnimationFrame(scrollStep);
+      }, 2500); 
+    }
+
+    function stopAutoScroll() {
+      isUserInteracting = true;
+      if (autoScrollReq) {
+        window.cancelAnimationFrame(autoScrollReq);
+      }
+    }
+
+    // Interruption Listeners: If the guest touches, swipes, scrolls, or clicks anything, the auto-scroll dies forever.
+    window.addEventListener('touchstart', stopAutoScroll, {passive: true});
+    window.addEventListener('touchmove', stopAutoScroll, {passive: true});
+    window.addEventListener('wheel', stopAutoScroll, {passive: true});
+    window.addEventListener('mousedown', stopAutoScroll, {passive: true});
+
 
     // =========================================
     // COUNTDOWN TIMER LOGIC
