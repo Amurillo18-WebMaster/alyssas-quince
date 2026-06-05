@@ -76,17 +76,17 @@
     }
 
     /* =========================================
-       FLOATING MUSIC BUTTON
+       FLOATING MUSIC BUTTON (Now a White Circle)
        ========================================= */
     #floating-music-btn {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      width: 94px; /* Widened to match the new 25% larger icon */
-      height: 120px; 
-      background: transparent; 
-      border-radius: 0;
-      box-shadow: none;
+      width: 100px; 
+      height: 100px; 
+      background: #ffffff; /* Solid white background */
+      border-radius: 50%; /* Makes it a perfect circle */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Button shadow */
       z-index: 9999;
       cursor: pointer;
       display: none; 
@@ -95,33 +95,31 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Increased by 25% (75px to 94px), lowered by 10%, and perfectly centered */
+    /* Icons increased by ~5% (94px to 99px) and locked to the exact center */
     #play-pause-img {
       position: absolute;
-      top: 10%; 
+      top: 50%; 
       left: 50%;
-      transform: translateX(-50%); /* Forces it to the dead-center horizontally */
-      width: 94px;
-      height: 94px;
+      transform: translate(-50%, -50%); /* Dead-center alignment */
+      width: 99px;
+      height: 99px;
       object-fit: contain; 
       z-index: 1;
-      filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.5));
     }
 
-    /* Fixed to completely erase compressed grey video backgrounds */
+    /* Video locked to the exact same center position as the icon */
     #dancing-video {
       position: absolute;
-      bottom: 0; 
+      top: 50%; 
       left: 50%;
-      transform: translateX(-50%); /* Centers the dancer below the icon */
+      transform: translate(-50%, -50%); /* Dead-center alignment */
       width: 75px;
       height: 75px;
       object-fit: cover;
       background-color: transparent;
       mix-blend-mode: multiply; 
-      -webkit-mix-blend-mode: multiply; /* Fix for Apple Devices */
-      /* Contrast/Brightness forces off-white compression pixels to turn pure white so they disappear */
-      filter: contrast(1.5) brightness(1.2) drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5)); 
+      -webkit-mix-blend-mode: multiply; 
+      filter: contrast(1.5) brightness(1.2); 
       z-index: 2; 
       pointer-events: none; 
     }
@@ -251,7 +249,7 @@
   </button>
 
   <div id="envelope-screen">
-    <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()"
+    <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()" ontouchstart="openEnvelope()"
             style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; z-index: 60;">
     </button>
   </div>
