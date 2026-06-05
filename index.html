@@ -76,14 +76,14 @@
     }
 
     /* =========================================
-       FLOATING MUSIC BUTTON (Scaled Down 20%)
+       FLOATING MUSIC BUTTON (Shrunk 5%)
        ========================================= */
     #floating-music-btn {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      width: 80px; /* Shrunk from 100px */
-      height: 80px; /* Shrunk from 100px */
+      width: 76px; /* Shrunk from 80px */
+      height: 76px; /* Shrunk from 80px */
       background: #ffffff; 
       border-radius: 50%; 
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
@@ -95,19 +95,19 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Shrunk to match the new 80px container */
+    /* Shrunk to match the new 76px container */
     #play-pause-img {
       position: absolute;
       top: 50%; 
       left: 50%;
       transform: translate(-50%, -50%); 
-      width: 80px;
-      height: 80px;
+      width: 76px;
+      height: 76px;
       object-fit: contain; 
       z-index: 1;
     }
 
-    /* Shrunk by 15%, then another 20% (75px down to 51px) */
+    /* Dancing video stays proportionally sized and perfectly centered */
     #dancing-video {
       position: absolute;
       top: 50%; 
@@ -228,177 +228,5 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-      }
-
-      .countdown-title { font-size: 2.1rem; margin-bottom: 0px; } 
-      .number { font-size: 2.2rem; } 
-      .divider { font-size: 1.8rem; margin: 0 4px; padding-bottom: 20px; }
-      .time-segment { min-width: 55px; } 
-      .label { font-size: 0.65rem; } 
-    }
-  </style>
-</head>
-<body>
-
-  <audio id="bg-music" src="music.m4a" loop playsinline preload="auto"></audio>
-
-  <button id="floating-music-btn" onclick="toggleFloatingMusic()">
-    <img id="play-pause-img" src="play icon.png" alt="Play/Pause Icon">
-    <video id="dancing-video" src="dancing icon.mp4" loop muted playsinline></video>
-  </button>
-
-  <div id="envelope-screen">
-    <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()" ontouchstart="openEnvelope()"
-            style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; z-index: 60;">
-    </button>
-  </div>
-
-  <div id="invitation-content">
-    
-    <div class="page-wrapper">
-      <img src="page1.gif" class="invite-page" alt="Page 1">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page2.gif" class="invite-page" alt="Page 2">
-    </div>
-
-    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
-    
-    <div class="page-wrapper">
-      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
-      
-      <div id="internal-countdown">
-        <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
-        <div class="countdown-wrapper">
-          <div class="time-segment"><span id="days" class="number gold-gradient">00</span><span class="label">Days</span></div>
-          <div class="divider gold-gradient">:</div>
-          <div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span class="label">Hours</span></div>
-          <div class="divider gold-gradient">:</div>
-          <div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span class="label">Minutes</span></div>
-          <div class="divider gold-gradient">:</div>
-          <div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span class="label">Seconds</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page5.gif" class="invite-page" alt="Page 5">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page6.gif" class="invite-page" alt="Page 6">
-      <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
-         style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page7.gif" class="invite-page" alt="Page 7 - RSVP">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
-         style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
-    </div>
-    
-    <div class="page-wrapper"><img src="page8.gif" class="invite-page" alt="Page 8"></div>
-  </div>
-
-  <script>
-    // =========================================
-    // THE SAFE AUDIO ENGINE
-    // =========================================
-
-    let envelopeHasOpened = false;
-
-    function openEnvelope() {
-      if (envelopeHasOpened) return;
-      envelopeHasOpened = true;
-
-      // 1. Force the audio to play FIRST to satisfy iOS rules
-      var music = document.getElementById('bg-music');
-      if (music) {
-        music.play().catch(function(error) {
-          console.log("Audio blocked by browser auto-play rules: ", error);
-        });
-      }
-
-      // 2. Instantly hide the envelope and show the invitation
-      document.getElementById('envelope-screen').style.display = 'none';
-      document.getElementById('invitation-content').style.display = 'block';
-      
-      // 3. Unhide the floating music player
-      document.getElementById('floating-music-btn').style.display = 'block';
-    }
-
-    function toggleFloatingMusic() {
-      var music = document.getElementById('bg-music');
-      if (music.paused) {
-        music.play().catch(function(error) {
-          console.log("Audio blocked: ", error);
-        });
-      } else {
-        music.pause();
-      }
-    }
-
-    // Synchronizes the custom image icon and the dancing video to the audio state
-    document.addEventListener("DOMContentLoaded", function() {
-      var music = document.getElementById('bg-music');
-      var iconImg = document.getElementById('play-pause-img');
-      var dancingVid = document.getElementById('dancing-video');
-
-      if (music) {
-        music.addEventListener('play', function() {
-          if (iconImg) iconImg.src = 'pause icon.png'; 
-          if (dancingVid) dancingVid.play(); 
-        });
-        music.addEventListener('pause', function() {
-          if (iconImg) iconImg.src = 'play icon.png'; 
-          if (dancingVid) dancingVid.pause(); 
-        });
-      }
-    });
-
-    // =========================================
-    // COUNTDOWN TIMER LOGIC
-    // =========================================
-    document.addEventListener("DOMContentLoaded", function() {
-      try {
-        var targetDate = new Date("September 6, 2026 00:00:00").getTime();
-
-        var countdownInterval = setInterval(function() {
-          var now = new Date().getTime();
-          var distance = targetDate - now;
-
-          if (distance < 0) {
-            clearInterval(countdownInterval);
-            var countdownBox = document.getElementById("internal-countdown");
-            if (countdownBox) {
-              countdownBox.innerHTML = "<h2 class='countdown-title gold-gradient'>The Event is Here!</h2>";
-            }
-            return;
-          }
-
-          var elDays = document.getElementById("days");
-          var elHours = document.getElementById("hours");
-          var elMins = document.getElementById("minutes");
-          var elSecs = document.getElementById("seconds");
-
-          if (elDays && elHours && elMins && elSecs) {
-            elDays.innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            elHours.innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            elMins.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            elSecs.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-          }
-        }, 1000);
-      } catch(err) {
-        console.log("Countdown timer error: ", err);
-      }
-    });
-  </script>
-
-</body>
-</html>
+        justify-content: center
+        
