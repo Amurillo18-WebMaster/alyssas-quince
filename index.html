@@ -95,15 +95,14 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    #play-pause-icon {
+    /* Updated CSS for the custom images */
+    #play-pause-img {
       position: absolute;
       top: 0;
       left: 0;
       width: 75px;
       height: 75px;
-      font-size: 75px; /* Same size as the dancing video */
-      line-height: 75px;
-      text-align: center;
+      object-fit: contain; /* Ensures your custom icons scale perfectly without stretching */
       z-index: 1;
       filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.5));
     }
@@ -241,7 +240,7 @@
   <audio id="bg-music" src="music.m4a" loop playsinline preload="auto"></audio>
 
   <button id="floating-music-btn" onclick="toggleFloatingMusic()">
-    <div id="play-pause-icon" class="gold-gradient">►</div>
+    <img id="play-pause-img" src="play icon.png" alt="Play/Pause Icon">
     <video id="dancing-video" src="dancing icon.mp4" loop muted playsinline></video>
   </button>
 
@@ -348,19 +347,19 @@
       }
     }
 
-    // Synchronizes the floating icon and the dancing video to the audio state
+    // Synchronizes the custom image icon and the dancing video to the audio state
     document.addEventListener("DOMContentLoaded", function() {
       var music = document.getElementById('bg-music');
-      var icon = document.getElementById('play-pause-icon');
+      var iconImg = document.getElementById('play-pause-img');
       var dancingVid = document.getElementById('dancing-video');
 
       if (music) {
         music.addEventListener('play', function() {
-          if (icon) icon.innerHTML = '❚❚'; 
+          if (iconImg) iconImg.src = 'pause icon.png'; // Swaps to your pause image
           if (dancingVid) dancingVid.play(); 
         });
         music.addEventListener('pause', function() {
-          if (icon) icon.innerHTML = '►'; 
+          if (iconImg) iconImg.src = 'play icon.png'; // Swaps to your play image
           if (dancingVid) dancingVid.pause(); 
         });
       }
