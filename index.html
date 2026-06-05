@@ -53,6 +53,374 @@
     }
 
     .invisible-btn {
+      /* The 1% opacity trick forces iOS to recognize this as a physical object to tap! */
+      background: rgba(255, 255, 255, 0.01); 
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation; /* Removes the 300ms tap delay on mobile */
+      transition: opacity 0.3s ease; 
+    }
+
+    /* =========================================
+       GOLD GRADIENT TEXT CLASS
+       ========================================= */
+    .gold-gradient {
+      background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4));
+    }
+
+    /* =========================================
+       FLOATING MUSIC BUTTON
+       ========================================= */
+    #floating-music-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 75px;
+      height: 105px; 
+      background: transparent; 
+      border-radius: 0;
+      box-shadow: none;
+      z-index: 9999;
+      cursor: pointer;
+      display: none; /* Remains hidden until the envelope opens */
+      flex-direction: column;
+      justify-content: flex-end; 
+      align-items: center;
+      border: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #play-pause-icon {
+      font-size: 2.5rem; 
+      z-index: 1;
+      margin-bottom: -15px; 
+      filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    #dancing-video {
+      width: 75px;
+      height: 75px;
+      object-fit: cover;
+      mix-blend-mode: multiply; 
+      z-index: 2; 
+      pointer-events: none; 
+    }
+
+    /* =========================================
+       CUSTOM COUNTDOWN WIDGET STYLES
+       ========================================= */
+    .countdown-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem; 
+      font-weight: normal;
+      margin: 0 0 5px 0;
+      text-align: center;
+    }
+
+    .countdown-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #333; 
+      background-color: transparent; 
+      padding: 0px 10px;
+      border-radius: 12px;
+      box-shadow: none; 
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .time-segment {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+    }
+
+    .number {
+      font-family: 'Great Vibes', cursive; 
+      font-size: 3rem; 
+      font-weight: normal;
+      line-height: 1;
+      letter-spacing: 2px;
+      color: #333;
+    }
+
+    .label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888; 
+      margin-top: 2px;
+    }
+
+    .divider {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: #ccc;
+      margin: 0 8px;
+      padding-bottom: 25px;
+    }
+
+    /* =========================================
+       DESKTOP SETTINGS
+       ========================================= */
+    @media (min-width: 769px) {
+      .page-wrapper {
+        position: relative;
+        width: 100%; 
+        left: 0; 
+        display: block;
+      }
+      
+      #internal-countdown {
+        position: absolute; 
+        top: 20%; 
+        left: 10%; 
+        width: 80%; 
+        height: 120px; 
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* =========================================
+       MOBILE SETTINGS
+       ========================================= */
+    @media (max-width: 768px) {
+      .page-wrapper {
+        position: relative;
+        width: 130%; 
+        left: -15%;  
+        display: block;
+      }
+
+      #internal-countdown {
+        position: absolute; 
+        top: 24%; 
+        left: 0%; 
+        width: 100%; 
+        height: 100px; 
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .countdown-title { font-size: 2.1rem; margin-bottom: 0px; } 
+      .number { font-size: 2.2rem; } 
+      .divider { font-size: 1.8rem; margin: 0 4px; padding-bottom: 20px; }
+      .time-segment { min-width: 55px; } 
+      .label { font-size: 0.65rem; } 
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bg-music" src="music.m4a" loop playsinline preload="auto"></audio>
+
+  <button id="floating-music-btn" onclick="toggleFloatingMusic()">
+    <div id="play-pause-icon" class="gold-gradient">►</div>
+    <video id="dancing-video" src="dancing icon.mp4" loop muted playsinline></video>
+  </button>
+
+  <div id="envelope-screen">
+    <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()" ontouchstart="openEnvelope()"
+            style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; z-index: 60;">
+    </button>
+  </div>
+
+  <div id="invitation-content">
+    
+    <div class="page-wrapper">
+      <img src="page1.gif" class="invite-page" alt="Page 1">
+      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
+         style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page2.gif" class="invite-page" alt="Page 2">
+    </div>
+
+    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
+    
+    <div class="page-wrapper">
+      <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
+      
+      <div id="internal-countdown">
+        <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
+        <div class="countdown-wrapper">
+          <div class="time-segment"><span id="days" class="number gold-gradient">00</span><span class="label">Days</span></div>
+          <div class="divider gold-gradient">:</div>
+          <div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span class="label">Hours</span></div>
+          <div class="divider gold-gradient">:</div>
+          <div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span class="label">Minutes</span></div>
+          <div class="divider gold-gradient">:</div>
+          <div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span class="label">Seconds</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page5.gif" class="invite-page" alt="Page 5">
+      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
+         style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page6.gif" class="invite-page" alt="Page 6">
+      <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
+         style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
+    </div>
+
+    <div class="page-wrapper">
+      <img src="page7.gif" class="invite-page" alt="Page 7 - RSVP">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
+         style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
+    </div>
+    
+    <div class="page-wrapper"><img src="page8.gif" class="invite-page" alt="Page 8"></div>
+  </div>
+
+  <script>
+    // =========================================
+    // THE SAFE AUDIO ENGINE
+    // =========================================
+
+    // Prevents double-firing if both touch and click trigger simultaneously
+    let envelopeHasOpened = false;
+
+    function openEnvelope() {
+      if (envelopeHasOpened) return;
+      envelopeHasOpened = true;
+
+      // 1. Instantly hide the envelope and show the invitation
+      document.getElementById('envelope-screen').style.display = 'none';
+      document.getElementById('invitation-content').style.display = 'block';
+      
+      // 2. Unhide the floating music player
+      document.getElementById('floating-music-btn').style.display = 'flex';
+
+      // 3. Handle the audio safely (starts from the beginning)
+      var music = document.getElementById('bg-music');
+      if (music) {
+        music.volume = 1.0; 
+
+        // Attempt to auto-play
+        var playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(function(error) {
+            console.log("Browser Auto-Play Policy Blocked the Audio: ", error);
+            // If blocked, the user can just tap the floating Play button!
+          });
+        }
+      }
+    }
+
+    function toggleFloatingMusic() {
+      var music = document.getElementById('bg-music');
+      if (music.paused) {
+        music.play().catch(function(error) {
+          console.log("Audio blocked: ", error);
+        });
+      } else {
+        music.pause();
+      }
+    }
+
+    // Synchronizes the floating icon and the dancing video to the audio state
+    document.addEventListener("DOMContentLoaded", function() {
+      var music = document.getElementById('bg-music');
+      var icon = document.getElementById('play-pause-icon');
+      var dancingVid = document.getElementById('dancing-video');
+
+      if (music) {
+        music.addEventListener('play', function() {
+          if (icon) icon.innerHTML = '❚❚'; 
+          if (dancingVid) dancingVid.play(); 
+        });
+        music.addEventListener('pause', function() {
+          if (icon) icon.innerHTML = '►'; 
+          if (dancingVid) dancingVid.pause(); 
+        });
+      }
+    });
+
+    // =========================================
+    // COUNTDOWN TIMER LOGIC
+    // =========================================
+    document.addEventListener("DOMContentLoaded", function() {
+      try {
+        var targetDate = new Date("September 6, 2026 00:00:00").getTime();
+
+        var countdownInterval = setInterval(function() {
+          var now = new Date().getTime();
+          var distance = targetDate - now;
+
+          if (distance < 0) {
+            clearInterval(countdownInterval);
+            var countdownBox = document.getElementById("internal-countdown");
+            if (countdownBox) {
+              countdownBox.innerHTML = "<h2 class='countdown-title gold-gradient'>The Event is Here!</h2>";
+            }
+            return;
+          }
+
+          var elDays = document.getElementById("days");
+          var elHours = document.getElementById("hours");
+          var elMins = document.getElementById("minutes");
+          var elSecs = document.getElementById("seconds");
+
+          if (elDays && elHours && elMins && elSecs) {
+            elDays.innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            elHours.innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            elMins.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            elSecs.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+          }
+        }, 1000);
+      } catch(err) {
+        console.log("Countdown timer error: ", err);
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+    #invitation-content {
+      display: none; 
+      width: 100%;
+      max-width: 500px; 
+      margin: 0 auto; 
+      background-color: #fff;
+      overflow: hidden; 
+    }
+
+    .invite-page {
+      width: 100%;
+      display: block; 
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    .invisible-btn {
       background: transparent;
       border: none;
       outline: none;
