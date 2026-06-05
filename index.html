@@ -76,6 +76,75 @@
     }
 
     /* =========================================
+       AUDIO POP-UP MODAL STYLES
+       ========================================= */
+    #audio-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+      display: none; /* Hidden until envelope is opened */
+      justify-content: center;
+      align-items: center;
+      z-index: 100; /* Stays on top of everything */
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .audio-modal {
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 80%;
+      width: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 2px solid #e7aa51;
+    }
+
+    .audio-modal h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      margin: 0 0 10px 0;
+    }
+
+    .audio-modal p {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #555;
+      font-size: 0.9rem;
+      margin: 0 0 20px 0;
+      line-height: 1.4;
+    }
+
+    .modal-btn {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1rem;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      font-weight: bold;
+    }
+
+    .btn-play {
+      background: linear-gradient(to right, #e7aa51, #702906);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 10px rgba(231, 170, 81, 0.4);
+    }
+
+    .btn-close {
+      background: transparent;
+      color: #888;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    /* =========================================
        CUSTOM COUNTDOWN WIDGET STYLES
        ========================================= */
     .countdown-title {
@@ -194,6 +263,15 @@
 
   <audio id="bg-music" src="quinceanera.m4a" loop playsinline preload="auto"></audio>
 
+  <div id="audio-popup">
+    <div class="audio-modal">
+      <h3 class="gold-gradient">Welcome!</h3>
+      <p>This invitation is best experienced with music. Would you like to play the background audio?</p>
+      <button class="modal-btn btn-play" onclick="acceptMusic()">Play Music</button>
+      <button class="modal-btn btn-close" onclick="closeAudioPopup()">No Thanks</button>
+    </div>
+  </div>
+
   <div id="envelope-screen">
     <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()"
             style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; z-index: 60;">
@@ -210,15 +288,13 @@
 
     <div class="page-wrapper">
       <img src="page2.gif" class="invite-page" alt="Page 2">
-      <button id="page2-hitbox" class="invisible-btn" onclick="forcePlayMusic(this)"
+      <button id="page2-hitbox" class="invisible-btn" onclick="acceptMusic()"
               style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; z-index: 50; display: flex; justify-content: center; align-items: center; flex-direction: column;">
         <h2 class="countdown-title gold-gradient" style="margin: 0;">Tap to Play</h2>
       </button>
     </div>
 
-    <div class="page-wrapper">
-      <img src="page3.gif" class="invite-page" alt="Page 3">
-    </div>
+    <div class="page-wrapper"><img src="page3.gif" class="invite-page" alt="Page 3"></div>
     
     <div class="page-wrapper">
       <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
@@ -255,48 +331,56 @@
          style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
     </div>
     
-    <div class="page-wrapper">
-      <img src="page8.gif" class="invite-page" alt="Page 8">
-    </div>
+    <div class="page-wrapper"><img src="page8.gif" class="invite-page" alt="Page 8"></div>
   </div>
 
   <script>
     // =========================================
-    // SMART AUDIO ENGINE
+    // EXPLICIT CONSENT AUDIO ENGINE
     // =========================================
-    
-    function forcePlayMusic(buttonElement) {
-      var music = document.getElementById('bg-music');
-      
-      if (music && music.paused) {
-        var playPromise = music.play();
-        if (playPromise !== undefined) {
-          playPromise.then(function() {
-            // ONLY deletes the button text if the music actually starts playing
-            if (buttonElement) {
-              buttonElement.style.opacity = '0';
-              buttonElement.style.pointerEvents = 'none';
-            }
-          }).catch(function(error) {
-            console.log("Audio file missing or blocked: ", error);
-            // If it fails, the gold text will stay on the screen so you know it failed!
-          });
-        }
-      } else {
-        // If music is already playing, just hide the button
-        if (buttonElement) {
-          buttonElement.style.opacity = '0';
-          buttonElement.style.pointerEvents = 'none';
-        }
-      }
-    }
 
+    // 1. Opens envelope and instantly triggers the pop-up
     function openEnvelope() {
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
       
-      // Try to start music on the very first tap
-      forcePlayMusic(null);
+      // Trigger the pop-up
+      var popup = document.getElementById('audio-popup');
+      popup.style.display = 'flex';
+      
+      // Slight delay to allow CSS transition to fade it in smoothly
+      setTimeout(function() {
+        popup.style.opacity = '1';
+      }, 50);
+    }
+
+    // 2. The explicit user action that Safari/Chrome loves
+    function acceptMusic() {
+      var music = document.getElementById('bg-music');
+      var p2Btn = document.getElementById('page2-hitbox');
+
+      if (music) {
+        music.play().then(function() {
+          console.log("Explicit consent granted. Music is playing!");
+          // Hide the fallback button on Page 2 since music is already working
+          if(p2Btn) {
+            p2Btn.style.opacity = '0';
+            p2Btn.style.pointerEvents = 'none';
+          }
+        }).catch(function(error) {
+          console.log("Audio still blocked: ", error);
+        });
+      }
+      closeAudioPopup();
+    }
+
+    // 3. Gracefully close the popup
+    function closeAudioPopup() {
+      var popup = document.getElementById('audio-popup');
+      popup.style.opacity = '0';
+      setTimeout(function() {
+        popup.style.display = 'none';
+      }, 400); // Matches the CSS transition time
     }
 
     // =========================================
