@@ -52,7 +52,6 @@
       border: none;
     }
 
-    /* Invisible Button Reset CSS to make actual buttons completely invisible */
     .invisible-btn {
       background: transparent;
       border: none;
@@ -61,6 +60,21 @@
       padding: 0;
       margin: 0;
       -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.2s ease; /* Smoothly fades out instead of abruptly deleting */
+    }
+
+    /* =========================================
+       GOLD GRADIENT TEXT CLASS
+       ========================================= */
+    .gold-gradient {
+      /* Replicates the shiny metallic gold from "The Details" */
+      background: linear-gradient(135deg, #a67c00 0%, #bf953f 25%, #fcf6ba 50%, #b38728 75%, #fdffcc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      /* We use filter instead of text-shadow for gradient text */
+      filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.8));
     }
 
     /* =========================================
@@ -68,8 +82,7 @@
        ========================================= */
     .countdown-title {
       font-family: 'Great Vibes', cursive;
-      color: #333; 
-      font-size: 2.4rem; 
+      font-size: 2.8rem; 
       font-weight: normal;
       margin: 0 0 5px 0;
       text-align: center;
@@ -97,10 +110,12 @@
     }
 
     .number {
-      font-size: 2.2rem;
-      font-weight: 300;
+      font-family: 'Great Vibes', cursive; /* Applied Great Vibes to numbers */
+      font-size: 3rem; /* Increased because cursive numbers run small */
+      font-weight: normal;
       line-height: 1;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      color: #333;
     }
 
     .label {
@@ -108,7 +123,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #888; 
-      margin-top: 6px;
+      margin-top: 2px;
     }
 
     .divider {
@@ -116,7 +131,7 @@
       font-weight: 300;
       color: #ccc;
       margin: 0 8px;
-      padding-bottom: 15px;
+      padding-bottom: 25px;
     }
 
     /* =========================================
@@ -132,7 +147,7 @@
       
       #internal-countdown {
         position: absolute; 
-        top: 20%; /* Raised by 5% */
+        top: 20%; 
         left: 10%; 
         width: 80%; 
         height: 120px; 
@@ -157,7 +172,7 @@
 
       #internal-countdown {
         position: absolute; 
-        top: 19%; /* Raised by 5% */
+        top: 24%; /* Moved down by 5% (was 19%) */
         left: 0%; 
         width: 100%; 
         height: 100px; 
@@ -168,11 +183,12 @@
         justify-content: center;
       }
 
-      .countdown-title { font-size: 1.75rem; margin-bottom: 0px; } 
-      .number { font-size: 1.6rem; }
-      .divider { font-size: 1.4rem; margin: 0 4px; padding-bottom: 10px; }
-      .time-segment { min-width: 45px; }
-      .label { font-size: 0.55rem; }
+      /* Enlarged elements by ~20% */
+      .countdown-title { font-size: 2.1rem; margin-bottom: 0px; } 
+      .number { font-size: 2.2rem; } 
+      .divider { font-size: 1.8rem; margin: 0 4px; padding-bottom: 20px; }
+      .time-segment { min-width: 55px; } /* Widened to fit larger font */
+      .label { font-size: 0.65rem; } 
     }
   </style>
 </head>
@@ -198,7 +214,7 @@
       <img src="page2.gif" class="invite-page" alt="Page 2">
       <button id="page2-hitbox" class="invisible-btn"
               style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; z-index: 50; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-        <h2 class="countdown-title" style="margin: 0; color: #C59D5F; text-shadow: 1px 1px 3px rgba(255,255,255,0.5);">Tap to Play</h2>
+        <h2 class="countdown-title gold-gradient" style="margin: 0;">Tap to Play</h2>
       </button>
     </div>
 
@@ -208,7 +224,7 @@
       <img src="page4.gif" class="invite-page" alt="Page 4 - Countdown">
       
       <div id="internal-countdown">
-        <h2 class="countdown-title">Alyssa's Quinceañera</h2>
+        <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
         <div class="countdown-wrapper">
           <div class="time-segment"><span id="days" class="number">00</span><span class="label">Days</span></div>
           <div class="divider">:</div>
@@ -245,7 +261,6 @@
   </div>
 
   <script>
-    // Wait for the entire website to finish loading before attaching buttons
     document.addEventListener("DOMContentLoaded", function() {
       
       // =========================================
@@ -257,39 +272,35 @@
       var envBtn = document.getElementById('envelope-hitbox');
       var p2Btn = document.getElementById('page2-hitbox');
 
-      function forceAudio() {
-        if (music && music.paused) {
-          var playPromise = music.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(function(error) {
-              console.log("Audio blocked: ", error);
-            });
-          }
-        }
-      }
-
-      function revealInvitation(e) {
-        if(e) e.preventDefault();
-        if (envScreen) envScreen.style.display = 'none';
-        if (inviteContent) inviteContent.style.display = 'block';
-        forceAudio();
-      }
-
+      // 1. Envelope Tap
       if (envBtn) {
-        envBtn.addEventListener('click', revealInvitation);
-        envBtn.addEventListener('touchstart', revealInvitation, {passive: false});
+        envBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (envScreen) envScreen.style.display = 'none';
+          if (inviteContent) inviteContent.style.display = 'block';
+          
+          if (music && music.paused) {
+            music.play().catch(function(err) { console.log("Audio blocked: ", err); });
+          }
+        });
       }
 
-      function triggerP2Audio(e) {
-        if(e) e.preventDefault();
-        forceAudio();
-        if (p2Btn) p2Btn.style.display = 'none'; // Deletes itself so you can scroll
-      }
-
+      // 2. Page 2 "Tap to Play" Fallback (Fixed to guarantee audio launch)
       if (p2Btn) {
-        p2Btn.addEventListener('click', triggerP2Audio);
-        p2Btn.addEventListener('touchstart', triggerP2Audio, {passive: false});
+        p2Btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Instead of "display: none", we make it transparent and unclickable. 
+          // This stops the browser from cancelling the audio request mid-process!
+          this.style.opacity = '0';
+          this.style.pointerEvents = 'none'; 
+          
+          if (music && music.paused) {
+            music.play().catch(function(err) { console.log("Audio blocked: ", err); });
+          }
+        });
       }
+
 
       // =========================================
       // COUNTDOWN TIMER LOGIC
@@ -305,7 +316,7 @@
             clearInterval(countdownInterval);
             var countdownBox = document.getElementById("internal-countdown");
             if (countdownBox) {
-              countdownBox.innerHTML = "<h2 style='text-align: center; color: #333; font-family: \"Great Vibes\", cursive; background: transparent; padding: 20px; font-size: 2.4rem; font-weight: normal; margin: 0;'>The Event is Here!</h2>";
+              countdownBox.innerHTML = "<h2 class='countdown-title gold-gradient'>The Event is Here!</h2>";
             }
             return;
           }
