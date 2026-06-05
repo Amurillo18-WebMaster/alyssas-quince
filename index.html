@@ -53,15 +53,13 @@
     }
 
     .invisible-btn {
-      /* The 1% opacity trick forces iOS to recognize this as a physical object to tap! */
-      background: rgba(255, 255, 255, 0.01); 
+      background: transparent;
       border: none;
       outline: none;
       cursor: pointer;
       padding: 0;
       margin: 0;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation; /* Removes the 300ms tap delay on mobile */
       transition: opacity 0.3s ease; 
     }
 
@@ -85,34 +83,41 @@
       bottom: 20px;
       left: 20px;
       width: 75px;
-      height: 105px; 
+      height: 120px; /* Precise height to force the 40% overlap */
       background: transparent; 
       border-radius: 0;
       box-shadow: none;
       z-index: 9999;
       cursor: pointer;
       display: none; /* Remains hidden until the envelope opens */
-      flex-direction: column;
-      justify-content: flex-end; 
-      align-items: center;
       border: none;
       outline: none;
       -webkit-tap-highlight-color: transparent;
     }
 
     #play-pause-icon {
-      font-size: 2.5rem; 
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 75px;
+      height: 75px;
+      font-size: 75px; /* Same size as the dancing video */
+      line-height: 75px;
+      text-align: center;
       z-index: 1;
-      margin-bottom: -15px; 
       filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.5));
     }
 
     #dancing-video {
+      position: absolute;
+      bottom: 0; /* Locks to bottom, creating 30px (40%) overlap with top icon */
+      left: 0;
       width: 75px;
       height: 75px;
       object-fit: cover;
-      mix-blend-mode: multiply; 
-      z-index: 2; 
+      mix-blend-mode: multiply; /* Removes white background */
+      filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5)); /* Adds shadow to the dancer */
+      z-index: 2; /* Sits in front of the play/pause icon */
       pointer-events: none; 
     }
 
@@ -303,7 +308,6 @@
     // THE SAFE AUDIO ENGINE
     // =========================================
 
-    // Prevents double-firing if both touch and click trigger simultaneously
     let envelopeHasOpened = false;
 
     function openEnvelope() {
@@ -314,8 +318,8 @@
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
       
-      // 2. Unhide the floating music player
-      document.getElementById('floating-music-btn').style.display = 'flex';
+      // 2. Unhide the floating music player as a block item
+      document.getElementById('floating-music-btn').style.display = 'block';
 
       // 3. Handle the audio safely (starts from the beginning)
       var music = document.getElementById('bg-music');
