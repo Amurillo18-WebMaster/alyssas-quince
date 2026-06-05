@@ -192,7 +192,7 @@
 </head>
 <body>
 
-  <audio id="bg-music" src="Quinceañera.m4a" loop playsinline preload="auto"></audio>
+  <audio id="bg-music" src="quinceanera.m4a" loop playsinline preload="auto"></audio>
 
   <div id="envelope-screen">
     <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()"
@@ -262,50 +262,42 @@
 
   <script>
     // =========================================
-    // THE BULLETPROOF AUDIO ENGINE
+    // SMART AUDIO ENGINE
     // =========================================
     
-    // This function forces the music to play.
     function forcePlayMusic(buttonElement) {
       var music = document.getElementById('bg-music');
       
-      // Tell the browser to play
       if (music && music.paused) {
         var playPromise = music.play();
         if (playPromise !== undefined) {
           playPromise.then(function() {
-            console.log("Music is playing!");
+            // ONLY deletes the button text if the music actually starts playing
+            if (buttonElement) {
+              buttonElement.style.opacity = '0';
+              buttonElement.style.pointerEvents = 'none';
+            }
           }).catch(function(error) {
-            console.log("Browser blocked audio: ", error);
+            console.log("Audio file missing or blocked: ", error);
+            // If it fails, the gold text will stay on the screen so you know it failed!
           });
         }
-      }
-
-      // If a button was clicked (like Page 2), make it disappear so they can scroll
-      if (buttonElement) {
-        buttonElement.style.opacity = '0';
-        buttonElement.style.pointerEvents = 'none';
+      } else {
+        // If music is already playing, just hide the button
+        if (buttonElement) {
+          buttonElement.style.opacity = '0';
+          buttonElement.style.pointerEvents = 'none';
+        }
       }
     }
 
-    // This function handles the Envelope click
     function openEnvelope() {
-      // Hide Envelope, Show Invitation
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('invitation-content').style.display = 'block';
       
-      // Attempt to play music instantly
+      // Try to start music on the very first tap
       forcePlayMusic(null);
     }
-
-    // Global Fallback: The absolute very first time they touch the screen ANYWHERE, try to play music.
-    document.body.addEventListener('touchstart', function() {
-      var music = document.getElementById('bg-music');
-      if (music && music.paused) {
-        music.play().catch(function(e){});
-      }
-    }, { once: true, passive: true });
-
 
     // =========================================
     // COUNTDOWN TIMER LOGIC
