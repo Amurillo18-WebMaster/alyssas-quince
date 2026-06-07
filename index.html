@@ -5,87 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
   
+  <meta property="og:title" content="You're Invited to Alyssa's Quinceañera!" />
+  <meta property="og:description" content="Tap here to open the interactive invitation and RSVP." />
+  <meta property="og:image" content="https://amurillo18-webmaster.github.io/alyssas-quince/preview.jpg" />
+  <meta property="og:url" content="https://amurillo18-webmaster.github.io/alyssas-quince/" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preload" href="envelope.gif" as="image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  
   <style>
     body, html { margin: 0; padding: 0; height: 100%; background-color: #fcfcfc; overflow-x: hidden; }
-    #envelope-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('envelope.gif'); background-size: cover; background-position: center; z-index: 50; }
-    #invitation-content { display: none; width: 100%; max-width: 500px; margin: 0 auto; }
-    .page-container { width: 100%; min-height: 500px; }
-    .smart-video { width: 100%; display: block; }
+    #envelope-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('envelope.gif'); background-size: cover; z-index: 50; }
+    #invitation-content { display: none; width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
+    .page-wrapper { position: relative; width: 100%; }
+    .invite-media { width: 100%; display: block; }
     .invisible-btn { background: rgba(255, 255, 255, 0.01); border: none; width: 100%; height: 100%; cursor: pointer; }
-    
-    /* Music Button Styles */
-    #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); z-index: 9999; display: none; border: none; }
-    #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; }
-    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; height: 51px; mix-blend-mode: multiply; pointer-events: none; }
+    .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+    #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; }
+    #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; }
+    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; mix-blend-mode: multiply; pointer-events: none; }
+    #internal-countdown { position: absolute; top: 24%; width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+    .number { font-family: 'Great Vibes', cursive; font-size: 2.2rem; }
   </style>
 </head>
 <body>
 
-  <audio id="bg-music" src="music.m4a" loop playsinline preload="metadata"></audio>
+  <audio id="bg-music" src="music.m4a" loop playsinline></audio>
 
   <button id="floating-music-btn" onclick="toggleFloatingMusic()">
     <img id="play-pause-img" src="play icon.png" alt="Play/Pause">
     <video id="dancing-video" src="dancing icon.mp4#t=0.001" loop muted playsinline></video>
   </button>
 
-  <div id="envelope-screen">
-    <button class="invisible-btn" onclick="openEnvelope()"></button>
-  </div>
+  <div id="envelope-screen"><button class="invisible-btn" onclick="openEnvelope()"></button></div>
 
   <div id="invitation-content">
-    </div>
+    <div id="pages-container"></div>
+  </div>
 
   <script>
-    const pageFiles = ['page1.mp4', 'page2.mp4', 'page3.mp4', 'page4.mp4', 'page5.mp4', 'page6.mp4', 'page7.mp4', 'page8.mp4'];
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const ext = isIOS ? 'mp4' : 'webp';
 
     function openEnvelope() {
-      // 1. Play audio immediately
       document.getElementById('bg-music').play().catch(e => console.log(e));
-      
-      // 2. Hide envelope
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('floating-music-btn').style.display = 'block';
       
-      // 3. Inject invitation pages one-by-one to prevent iPhone memory crash
-      const container = document.getElementById('invitation-content');
-      container.style.display = 'block';
-      
-      pageFiles.forEach(file => {
-        let vid = document.createElement('video');
-        vid.src = file;
-        vid.className = 'smart-video invite-page-vid';
-        vid.loop = true;
-        vid.muted = true;
-        vid.playsInline = true;
-        container.appendChild(vid);
-      });
-
-      // 4. Start scroll and video observer
+      const container = document.getElementById('pages-container');
+      container.innerHTML = `
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page1.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_MAPS_LINK_HERE" style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page2.${ext}"></${isIOS ? 'video' : 'img'}></div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page3.${ext}"></${isIOS ? 'video' : 'img'}></div>
+        <div class="page-wrapper">
+          <${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page4.${ext}"></${isIOS ? 'video' : 'img'}>
+          <div id="internal-countdown">
+            <h2 class="gold-gradient">Alyssa's Quinceañera</h2>
+            <div style="display:flex;"><div class="number gold-gradient" id="days">00</div><div class="number gold-gradient">:</div><div class="number gold-gradient" id="hours">00</div></div>
+          </div>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page5.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_MAPS_LINK_HERE" style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page6.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_AMAZON_LINK_HERE" style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page7.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_GOOGLE_FORM_LINK_HERE" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page8.${ext}"></${isIOS ? 'video' : 'img'}></div>
+      `;
+      document.getElementById('invitation-content').style.display = 'block';
       initVideoObserver();
-      startAutoScroll();
     }
 
     function initVideoObserver() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => entry.isIntersecting ? entry.target.play() : entry.target.pause());
       }, { threshold: 0.1 });
-      document.querySelectorAll('.smart-video').forEach(v => observer.observe(v));
+      document.querySelectorAll('video').forEach(v => observer.observe(v));
     }
 
     function toggleFloatingMusic() {
       let m = document.getElementById('bg-music');
       m.paused ? m.play() : m.pause();
-    }
-
-    // Auto-scroll engine
-    function startAutoScroll() {
-      setTimeout(() => {
-        let scroll = setInterval(() => {
-          if(window.scrollY >= document.body.scrollHeight - window.innerHeight) clearInterval(scroll);
-          window.scrollBy(0, 1);
-        }, 30);
-        window.addEventListener('touchstart', () => clearInterval(scroll), {once: true});
-      }, 2500);
     }
   </script>
 </body>
