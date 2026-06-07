@@ -5,449 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
   
+  <meta property="og:title" content="You're Invited to Alyssa's Quinceañera!" />
+  <meta property="og:description" content="Tap here to open the interactive invitation and RSVP." />
+  <meta property="og:image" content="https://amurillo18-webmaster.github.io/alyssas-quince/preview.jpg" />
+  <meta property="og:url" content="https://amurillo18-webmaster.github.io/alyssas-quince/" />
+  <meta property="og:type" content="website" />
+
   <link rel="preload" href="envelope.gif" as="image">
-  <link rel="preload" href="page1.webp" as="image">
-  <link rel="preload" href="page2.webp" as="image">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background-color: #fcfcfc;
-      overflow-x: hidden; 
-    }
-
-    #envelope-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('envelope.gif'); 
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 50; 
-    }
-
-    #invitation-content {
-      display: none; 
-      width: 100%;
-      max-width: 500px; 
-      margin: 0 auto; 
-      background-color: #fff;
-      overflow: hidden; 
-    }
-
-    .invite-page {
-      width: 100%;
-      display: block; 
-      margin: 0;
-      padding: 0;
-      border: none;
-    }
-
-    .invisible-btn {
-      background: rgba(255, 255, 255, 0.01); 
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 0;
-      margin: 0;
-      -webkit-tap-highlight-color: transparent;
-      transition: opacity 0.3s ease; 
-    }
-
-    /* =========================================
-       GOLD GRADIENT TEXT CLASS
-       ========================================= */
-    .gold-gradient {
-      background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4));
-    }
-
-    /* =========================================
-       FLOATING MUSIC BUTTON
-       ========================================= */
-    #floating-music-btn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 76px; 
-      height: 76px; 
-      background: #ffffff; 
-      border-radius: 50%; 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
-      z-index: 9999;
-      cursor: pointer;
-      display: none; 
-      border: none;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    #play-pause-img {
-      position: absolute;
-      top: 50%; 
-      left: 50%;
-      transform: translate(-50%, -50%); 
-      width: 76px;
-      height: 76px;
-      object-fit: contain; 
-      z-index: 1;
-    }
-
-    #dancing-video {
-      position: absolute;
-      top: 50%; 
-      left: 50%;
-      transform: translate(-50%, -50%); 
-      width: 51px;
-      height: 51px;
-      object-fit: cover;
-      background-color: transparent;
-      mix-blend-mode: multiply; 
-      -webkit-mix-blend-mode: multiply; 
-      filter: contrast(1.5) brightness(1.2); 
-      z-index: 2; 
-      pointer-events: none; 
-    }
-
-    /* =========================================
-       CUSTOM COUNTDOWN WIDGET STYLES
-       ========================================= */
-    .countdown-title {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.8rem; 
-      font-weight: normal;
-      margin: 0 0 5px 0;
-      text-align: center;
-    }
-
-    .countdown-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      color: #333; 
-      background-color: transparent; 
-      padding: 0px 10px;
-      border-radius: 12px;
-      box-shadow: none; 
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .time-segment {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 60px;
-    }
-
-    .number {
-      font-family: 'Great Vibes', cursive; 
-      font-size: 3rem; 
-      font-weight: normal;
-      line-height: 1;
-      letter-spacing: 2px;
-      color: #333;
-    }
-
-    .label {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #888; 
-      margin-top: 2px;
-    }
-
-    .divider {
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: #ccc;
-      margin: 0 8px;
-      padding-bottom: 25px;
-    }
-
-    /* =========================================
-       DESKTOP SETTINGS
-       ========================================= */
-    @media (min-width: 769px) {
-      .page-wrapper {
-        position: relative;
-        width: 100%; 
-        left: 0; 
-        display: block;
-      }
-      
-      #internal-countdown {
-        position: absolute; 
-        top: 20%; 
-        left: 10%; 
-        width: 80%; 
-        height: 120px; 
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-
-    /* =========================================
-       MOBILE SETTINGS
-       ========================================= */
-    @media (max-width: 768px) {
-      .page-wrapper {
-        position: relative;
-        width: 130%; 
-        left: -15%;  
-        display: block;
-      }
-
-      #internal-countdown {
-        position: absolute; 
-        top: 24%; 
-        left: 0%; 
-        width: 100%; 
-        height: 100px; 
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .countdown-title { font-size: 2.1rem; margin-bottom: 0px; } 
-      .number { font-size: 2.2rem; } 
-      .divider { font-size: 1.8rem; margin: 0 4px; padding-bottom: 20px; }
-      .time-segment { min-width: 55px; } 
-      .label { font-size: 0.65rem; } 
-    }
+    body, html { margin: 0; padding: 0; height: 100%; background-color: #fcfcfc; overflow-x: hidden; }
+    #envelope-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('envelope.gif'); background-size: cover; z-index: 50; }
+    #invitation-content { display: none; width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
+    .page-wrapper { position: relative; width: 100%; }
+    .invite-media { width: 100%; display: block; }
+    .invisible-btn { background: rgba(255, 255, 255, 0.01); border: none; width: 100%; height: 100%; cursor: pointer; }
+    .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+    #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; }
+    #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; }
+    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; mix-blend-mode: multiply; pointer-events: none; }
+    #internal-countdown { position: absolute; top: 24%; width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+    .number { font-family: 'Great Vibes', cursive; font-size: 2.2rem; }
   </style>
 </head>
 <body>
 
-  <audio id="bg-music" src="music.m4a" loop playsinline preload="auto"></audio>
+  <audio id="bg-music" src="music.m4a" loop playsinline></audio>
 
   <button id="floating-music-btn" onclick="toggleFloatingMusic()">
-    <img id="play-pause-img" src="play icon.png" alt="Play/Pause Icon">
-    <video id="dancing-video" src="dancing icon.mp4#t=0.001" loop muted playsinline preload="auto"></video>
+    <img id="play-pause-img" src="play icon.png" alt="Play/Pause">
+    <video id="dancing-video" src="dancing icon.mp4#t=0.001" loop muted playsinline></video>
   </button>
 
-  <div id="envelope-screen">
-    <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()"
-            style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; z-index: 60;">
-    </button>
-  </div>
+  <div id="envelope-screen"><button class="invisible-btn" onclick="openEnvelope()"></button></div>
 
   <div id="invitation-content">
-    
-    <div class="page-wrapper">
-      <img src="page1.webp" class="invite-page" alt="Page 1" loading="eager">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page2.webp" class="invite-page" alt="Page 2" loading="eager">
-    </div>
-
-    <div class="page-wrapper"><img src="page3.webp" class="invite-page" alt="Page 3" loading="lazy"></div>
-    
-    <div class="page-wrapper">
-      <img src="page4.webp" class="invite-page" alt="Page 4 - Countdown" loading="lazy">
-      <div id="internal-countdown">
-        <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
-        <div class="countdown-wrapper">
-          <div class="time-segment"><span id="days" class="number gold-gradient">00</span><span class="label">Days</span></div>
-          <div class="divider gold-gradient">:</div>
-          <div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span class="label">Hours</span></div>
-          <div class="divider gold-gradient">:</div>
-          <div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span class="label">Minutes</span></div>
-          <div class="divider gold-gradient">:</div>
-          <div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span class="label">Seconds</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page5.webp" class="invite-page" alt="Page 5" loading="lazy">
-      <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" 
-         style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page6.webp" class="invite-page" alt="Page 6" loading="lazy">
-      <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" 
-         style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
-    </div>
-
-    <div class="page-wrapper">
-      <img src="page7.webp" class="invite-page" alt="Page 7 - RSVP" loading="lazy">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" 
-         style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
-    </div>
-    
-    <div class="page-wrapper"><img src="page8.webp" class="invite-page" alt="Page 8" loading="lazy"></div>
+    <div id="pages-container"></div>
   </div>
 
   <script>
-    // =========================================
-    // THE SAFE AUDIO ENGINE
-    // =========================================
-
-    let envelopeHasOpened = false;
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const ext = isIOS ? 'mp4' : 'webp';
 
     function openEnvelope() {
-      if (envelopeHasOpened) return;
-      envelopeHasOpened = true;
-
-      // 1. Force the audio to play FIRST to satisfy iOS rules
-      var music = document.getElementById('bg-music');
-      if (music) {
-        music.play().catch(function(error) {
-          console.log("Audio blocked by browser auto-play rules: ", error);
-        });
-      }
-
-      // 2. Instantly hide the envelope and show the invitation
+      document.getElementById('bg-music').play().catch(e => console.log(e));
       document.getElementById('envelope-screen').style.display = 'none';
-      document.getElementById('invitation-content').style.display = 'block';
-      
-      // 3. Unhide the floating music player
       document.getElementById('floating-music-btn').style.display = 'block';
+      
+      const container = document.getElementById('pages-container');
+      container.innerHTML = `
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page1.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_MAPS_LINK_HERE" style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page2.${ext}"></${isIOS ? 'video' : 'img'}></div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page3.${ext}"></${isIOS ? 'video' : 'img'}></div>
+        <div class="page-wrapper">
+          <${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page4.${ext}"></${isIOS ? 'video' : 'img'}>
+          <div id="internal-countdown">
+            <h2 class="gold-gradient">Alyssa's Quinceañera</h2>
+            <div style="display:flex;"><div class="number gold-gradient" id="days">00</div><div class="number gold-gradient">:</div><div class="number gold-gradient" id="hours">00</div></div>
+          </div>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page5.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_MAPS_LINK_HERE" style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page6.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_AMAZON_LINK_HERE" style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page7.${ext}"></${isIOS ? 'video' : 'img'}>
+          <a href="YOUR_GOOGLE_FORM_LINK_HERE" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; z-index: 10;"></a>
+        </div>
+        <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page8.${ext}"></${isIOS ? 'video' : 'img'}></div>
+      `;
+      document.getElementById('invitation-content').style.display = 'block';
+      initVideoObserver();
+    }
 
-      // 4. Trigger the cinematic auto-scroll
-      startAutoScroll();
+    function initVideoObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => entry.isIntersecting ? entry.target.play() : entry.target.pause());
+      }, { threshold: 0.1 });
+      document.querySelectorAll('video').forEach(v => observer.observe(v));
     }
 
     function toggleFloatingMusic() {
-      // If they click the music button, we also count that as an interaction to stop scrolling
-      stopAutoScroll(); 
-      
-      var music = document.getElementById('bg-music');
-      if (music.paused) {
-        music.play().catch(function(error) {
-          console.log("Audio blocked: ", error);
-        });
-      } else {
-        music.pause();
-      }
+      let m = document.getElementById('bg-music');
+      m.paused ? m.play() : m.pause();
     }
-
-    // Synchronizes the custom image icon and the dancing video to the audio state
-    document.addEventListener("DOMContentLoaded", function() {
-      var music = document.getElementById('bg-music');
-      var iconImg = document.getElementById('play-pause-img');
-      var dancingVid = document.getElementById('dancing-video');
-
-      if (music) {
-        music.addEventListener('play', function() {
-          if (iconImg) iconImg.src = 'pause icon.png'; 
-          if (dancingVid) dancingVid.play(); 
-        });
-        music.addEventListener('pause', function() {
-          if (iconImg) iconImg.src = 'play icon.png'; 
-          if (dancingVid) dancingVid.pause(); 
-        });
-      }
-    });
-
-    // =========================================
-    // CINEMATIC AUTO-SCROLL ENGINE
-    // =========================================
-    let autoScrollReq;
-    let isUserInteracting = false;
-
-    function startAutoScroll() {
-      // Wait exactly 2.5 seconds before scrolling so they can read the top page
-      setTimeout(function() {
-        if (isUserInteracting) return; 
-        
-        function scrollStep() {
-          if (isUserInteracting) return; // Halt instantly if the user takes over
-          
-          // Scrolls down 1 pixel per frame for a smooth, slow cinematic pan
-          window.scrollBy(0, 1); 
-          
-          // Automatically stop if the site reaches the absolute bottom
-          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
-            isUserInteracting = true;
-            return;
-          }
-          
-          autoScrollReq = window.requestAnimationFrame(scrollStep);
-        }
-        
-        autoScrollReq = window.requestAnimationFrame(scrollStep);
-      }, 2500); 
-    }
-
-    function stopAutoScroll() {
-      isUserInteracting = true;
-      if (autoScrollReq) {
-        window.cancelAnimationFrame(autoScrollReq);
-      }
-    }
-
-    // Interruption Listeners: If the guest touches, swipes, scrolls, or clicks anything, the auto-scroll dies forever.
-    window.addEventListener('touchstart', stopAutoScroll, {passive: true});
-    window.addEventListener('touchmove', stopAutoScroll, {passive: true});
-    window.addEventListener('wheel', stopAutoScroll, {passive: true});
-    window.addEventListener('mousedown', stopAutoScroll, {passive: true});
-
-
-    // =========================================
-    // COUNTDOWN TIMER LOGIC
-    // =========================================
-    document.addEventListener("DOMContentLoaded", function() {
-      try {
-        var targetDate = new Date("September 6, 2026 00:00:00").getTime();
-
-        var countdownInterval = setInterval(function() {
-          var now = new Date().getTime();
-          var distance = targetDate - now;
-
-          if (distance < 0) {
-            clearInterval(countdownInterval);
-            var countdownBox = document.getElementById("internal-countdown");
-            if (countdownBox) {
-              countdownBox.innerHTML = "<h2 class='countdown-title gold-gradient'>The Event is Here!</h2>";
-            }
-            return;
-          }
-
-          var elDays = document.getElementById("days");
-          var elHours = document.getElementById("hours");
-          var elMins = document.getElementById("minutes");
-          var elSecs = document.getElementById("seconds");
-
-          if (elDays && elHours && elMins && elSecs) {
-            elDays.innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            elHours.innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            elMins.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            elSecs.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-          }
-        }, 1000);
-      } catch(err) {
-        console.log("Countdown timer error: ", err);
-      }
-    });
   </script>
-
 </body>
 </html>
