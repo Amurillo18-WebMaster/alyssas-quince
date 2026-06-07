@@ -19,7 +19,10 @@
   
   <style>
     body, html { margin: 0; padding: 0; height: 100%; background-color: #fcfcfc; overflow-x: hidden; }
-    #envelope-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('envelope.gif'); background-size: cover; z-index: 50; }
+    
+    /* Restored Centering CSS */
+    #envelope-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('envelope.gif'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; z-index: 50; }
+    
     #invitation-content { display: none; width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
     .page-wrapper { position: relative; width: 100%; }
     .invite-media { width: 100%; display: block; }
@@ -34,8 +37,10 @@
        FLOATING MUSIC BUTTON
        ========================================= */
     #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; -webkit-tap-highlight-color: transparent;}
-    #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; object-fit: contain; }
-    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; mix-blend-mode: multiply; pointer-events: none; }
+    #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; object-fit: contain; z-index: 1;}
+    
+    /* Restored Transparency CSS */
+    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; height: 51px; object-fit: cover; background-color: transparent; mix-blend-mode: multiply; -webkit-mix-blend-mode: multiply; filter: contrast(1.5) brightness(1.2); pointer-events: none; z-index: 2;}
     
     /* =========================================
        CUSTOM COUNTDOWN WIDGET STYLES
@@ -70,7 +75,9 @@
     <video id="dancing-video" src="dancing icon.mp4#t=0.001" loop muted playsinline></video>
   </button>
 
-  <div id="envelope-screen"><button class="invisible-btn" onclick="openEnvelope()"></button></div>
+  <div id="envelope-screen">
+    <button id="envelope-hitbox" class="invisible-btn" onclick="openEnvelope()" style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; z-index: 60;"></button>
+  </div>
 
   <div id="invitation-content">
     <div id="pages-container"></div>
@@ -81,16 +88,23 @@
     const ext = isIOS ? 'mp4' : 'webp';
 
     function openEnvelope() {
-      document.getElementById('bg-music').play().catch(e => console.log(e));
+      // 1. Play audio immediately & force icon update
+      var music = document.getElementById('bg-music');
+      music.play().then(() => {
+        document.getElementById('play-pause-img').src = 'pause icon.png';
+        document.getElementById('dancing-video').play();
+      }).catch(e => console.log("Auto-play blocked: ", e));
+      
+      // 2. Hide envelope
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('floating-music-btn').style.display = 'block';
       
+      // 3. Inject Pages with Restored Links
       const container = document.getElementById('pages-container');
       
-      // Injecting the code dynamically based on the device detected
       container.innerHTML = `
         <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page1.${ext}"></${isIOS ? 'video' : 'img'}>
-          <a href="YOUR_MAPS_LINK_HERE" style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; z-index: 10;"></a>
+          <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" style="position: absolute; top: 88%; left: 35%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
         </div>
         
         <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page2.${ext}"></${isIOS ? 'video' : 'img'}></div>
@@ -113,15 +127,15 @@
         </div>
         
         <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page5.${ext}"></${isIOS ? 'video' : 'img'}>
-          <a href="YOUR_MAPS_LINK_HERE" style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; z-index: 10;"></a>
+          <a href="https://maps.app.goo.gl/1ujmyQ3dyE6RRyRf8" target="_blank" style="position: absolute; top: 31%; left: 15%; width: 70%; height: 16%; display: block; z-index: 10;"></a>
         </div>
         
         <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page6.${ext}"></${isIOS ? 'video' : 'img'}>
-          <a href="YOUR_AMAZON_LINK_HERE" style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; z-index: 10;"></a>
+          <a href="https://www.amazon.com/registries/custom/placeholder" target="_blank" style="position: absolute; top: 68%; left: 55%; width: 35%; height: 6%; display: block; z-index: 10;"></a>
         </div>
         
         <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page7.${ext}"></${isIOS ? 'video' : 'img'}>
-          <a href="YOUR_GOOGLE_FORM_LINK_HERE" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; z-index: 10;"></a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform" target="_blank" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
         </div>
         
         <div class="page-wrapper"><${isIOS ? 'video autoplay loop muted playsinline' : 'img'} class="invite-media" src="page8.${ext}"></${isIOS ? 'video' : 'img'}></div>
@@ -129,67 +143,9 @@
       
       document.getElementById('invitation-content').style.display = 'block';
       initVideoObserver();
-      startCountdown(); // Start the clock once injected!
+      startCountdown(); 
     }
 
     // Prevents iPhone from crashing by pausing videos off-screen
     function initVideoObserver() {
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => entry.isIntersecting ? entry.target.play() : entry.target.pause());
-      }, { threshold: 0.1 });
-      document.querySelectorAll('video').forEach(v => observer.observe(v));
-    }
-
-    // Audio / Button synchronizer 
-    function toggleFloatingMusic() {
-      let m = document.getElementById('bg-music');
-      var iconImg = document.getElementById('play-pause-img');
-      var dancingVid = document.getElementById('dancing-video');
-      
-      if (m.paused) {
-        m.play();
-        if (iconImg) iconImg.src = 'pause icon.png';
-        if (dancingVid) dancingVid.play();
-      } else {
-        m.pause();
-        if (iconImg) iconImg.src = 'play icon.png';
-        if (dancingVid) dancingVid.pause();
-      }
-    }
-
-    // Countdown Engine
-    function startCountdown() {
-      try {
-        var targetDate = new Date("September 6, 2026 00:00:00").getTime();
-        var countdownInterval = setInterval(function() {
-          var now = new Date().getTime();
-          var distance = targetDate - now;
-
-          if (distance < 0) {
-            clearInterval(countdownInterval);
-            var countdownBox = document.getElementById("internal-countdown");
-            if (countdownBox) {
-              countdownBox.innerHTML = "<h2 class='countdown-title gold-gradient'>The Event is Here!</h2>";
-            }
-            return;
-          }
-
-          var elDays = document.getElementById("days");
-          var elHours = document.getElementById("hours");
-          var elMins = document.getElementById("minutes");
-          var elSecs = document.getElementById("seconds");
-
-          if (elDays && elHours && elMins && elSecs) {
-            elDays.innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            elHours.innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            elMins.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            elSecs.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-          }
-        }, 1000);
-      } catch(err) {
-        console.log("Countdown timer error: ", err);
-      }
-    }
-  </script>
-</body>
-</html>
