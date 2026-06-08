@@ -36,11 +36,19 @@
     .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4)); }
     
     /* =========================================
-       FLOATING MUSIC BUTTON & TRANSPARENT DANCER
+       FLOATING MUSIC BUTTON (Optimized for Transparent WebP)
        ========================================= */
     #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; -webkit-tap-highlight-color: transparent;}
+    
     #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; object-fit: contain; z-index: 1;}
-    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; height: 51px; object-fit: cover; background-color: transparent; mix-blend-mode: multiply; -webkit-mix-blend-mode: multiply; filter: contrast(1.5) brightness(1.2); pointer-events: none; z-index: 2;}
+    
+    #dancing-video { 
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+      width: 51px; height: 51px; object-fit: cover; 
+      pointer-events: none; z-index: 2;
+      opacity: 0; /* Starts hidden until music plays */
+      transition: opacity 0.3s ease; /* Smooth fade in and out */
+    }
     
     /* =========================================
        CUSTOM COUNTDOWN WIDGET STYLES
@@ -72,7 +80,7 @@
 
   <button id="floating-music-btn" onclick="toggleFloatingMusic()">
     <img id="play-pause-img" src="play icon.png" alt="Play/Pause">
-    <video id="dancing-video" src="dancing icon.webp" loop muted playsinline></video>
+    <img id="dancing-video" src="dancing icon.webp" alt="Dancing Icon">
   </button>
 
   <div id="envelope-screen" onclick="openEnvelope()">
@@ -92,12 +100,9 @@
       if (envelopeHasOpened) return;
       envelopeHasOpened = true;
 
-      // 1. Play audio immediately & force sync the button and dancing video
+      // 1. Play audio immediately
       var music = document.getElementById('bg-music');
-      music.play().then(() => {
-        document.getElementById('play-pause-img').src = 'pause icon.png';
-        document.getElementById('dancing-video').play();
-      }).catch(e => console.log("Auto-play blocked: ", e));
+      music.play().catch(e => console.log("Auto-play blocked: ", e));
       
       // 2. Hide envelope
       document.getElementById('envelope-screen').style.display = 'none';
@@ -150,33 +155,25 @@
       startCountdown(); 
     }
 
-    // Prevents iPhone from crashing by pausing videos off-screen
     function initVideoObserver() {
-      if (!isIOS) return; // Only needed if MP4s are loading
+      if (!isIOS) return; 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => entry.isIntersecting ? entry.target.play() : entry.target.pause());
       }, { threshold: 0.1 });
       document.querySelectorAll('video.invite-media').forEach(v => observer.observe(v));
     }
 
-    // Audio / Button synchronizer 
+    // Toggle Music
     function toggleFloatingMusic() {
       let m = document.getElementById('bg-music');
-      var iconImg = document.getElementById('play-pause-img');
-      var dancingVid = document.getElementById('dancing-video');
-      
       if (m.paused) {
         m.play();
-        if (iconImg) iconImg.src = 'pause icon.png';
-        if (dancingVid) dancingVid.play();
       } else {
         m.pause();
-        if (iconImg) iconImg.src = 'play icon.png';
-        if (dancingVid) dancingVid.pause();
       }
     }
 
-    // Keeps button synced if audio ends or is paused externally
+    // Controls the Play/Pause Icon and fades the dancing image in and out based on audio state!
     document.addEventListener("DOMContentLoaded", function() {
       var music = document.getElementById('bg-music');
       var iconImg = document.getElementById('play-pause-img');
@@ -185,11 +182,11 @@
       if (music) {
         music.addEventListener('play', function() {
           if (iconImg) iconImg.src = 'pause icon.png'; 
-          if (dancingVid) dancingVid.play(); 
+          if (dancingVid) dancingVid.style.opacity = '1'; 
         });
         music.addEventListener('pause', function() {
           if (iconImg) iconImg.src = 'play icon.png'; 
-          if (dancingVid) dancingVid.pause(); 
+          if (dancingVid) dancingVid.style.opacity = '0'; 
         });
       }
     });
