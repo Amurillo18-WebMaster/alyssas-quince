@@ -17,11 +17,10 @@
     
     #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; padding: 0; overflow: hidden; }
     #play-pause-img { position: absolute; top: 0; left: 0; width: 76px; height: 76px; z-index: 1; }
-    /* BLEND MODE: MULTIPLY removes white background from the icon */
     #dancing-video { position: absolute; top: 0; left: 0; width: 76px; height: 76px; z-index: 3; opacity: 0; transition: opacity 0.3s ease; mix-blend-mode: multiply; }
     
-    /* COUNTDOWN: Moved down 5% and shrunk by 5% */
-    #internal-countdown { position: absolute; top: 27%; left: 0%; width: 100%; z-index: 10; display: flex; justify-content: center; transform: scale(1.35); }
+    /* COUNTDOWN: Moved down 10% (top: 32%) and scaled by 1.40 (increase of 5% from previous 1.35) */
+    #internal-countdown { position: absolute; top: 32%; left: 0%; width: 100%; z-index: 10; display: flex; justify-content: center; transform: scale(1.40); }
     .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; }
     .time-segment { display: flex; flex-direction: column; align-items: center; min-width: 45px; }
     .number { font-family: 'Great Vibes', cursive; font-size: 2.1rem; }
