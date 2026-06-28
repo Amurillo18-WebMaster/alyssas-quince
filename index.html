@@ -22,8 +22,10 @@
     .invite-media { width: 100%; display: block; }
     .invisible-btn { background: rgba(255, 255, 255, 0.01); border: none; outline: none; cursor: pointer; padding: 0; margin: 0; -webkit-tap-highlight-color: transparent; }
     .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4)); }
+    
     #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; }
     #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; }
+    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; height: 51px; opacity: 0; transition: opacity 0.3s ease; }
     
     .countdown-title { font-family: 'Great Vibes', cursive; font-size: 2.8rem; font-weight: normal; margin: 0 0 5px 0; text-align: center; }
     .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 0px 10px; width: 100%; box-sizing: border-box; }
@@ -44,6 +46,7 @@
 
   <button id="floating-music-btn" onclick="toggleMusic()">
     <img id="play-pause-img" src="play icon.png">
+    <img id="dancing-video" src="dancing icon.webp">
   </button>
 
   <div id="envelope-screen" onclick="openEnvelope()"><button class="invisible-btn" style="width:100%; height:100%"></button></div>
@@ -91,8 +94,10 @@
 
     function toggleMusic() {
       let m = document.getElementById('bg-music');
+      let v = document.getElementById('dancing-video');
       m.paused ? m.play() : m.pause();
       document.getElementById('play-pause-img').src = m.paused ? 'play icon.png' : 'pause icon.png';
+      v.style.opacity = m.paused ? '0' : '1';
     }
 
     function startCountdown() {
