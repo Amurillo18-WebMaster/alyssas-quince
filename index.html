@@ -17,14 +17,15 @@
     #play-pause-img { position: absolute; top: 0; left: 0; width: 76px; height: 76px; z-index: 1; }
     #dancing-video { position: absolute; top: 0; left: 0; width: 76px; height: 76px; z-index: 3; opacity: 0; transition: opacity 0.3s ease; }
     
-    .countdown-title { font-family: 'Great Vibes', cursive; font-size: 2.8rem; font-weight: normal; margin: 0 0 5px 0; text-align: center; color: #702906; }
-    .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 0px 10px; width: 100%; box-sizing: border-box; }
-    .time-segment { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
-    .number { font-family: 'Great Vibes', cursive; font-size: 3rem; color: #702906; }
+    /* Countdown Styles */
+    #internal-countdown { position: absolute; top: 24%; left: 0%; width: 100%; height: 100px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); transform-origin: center top; }
+    .countdown-title { font-family: 'Great Vibes', cursive; font-size: 2.8rem; margin: 0 0 5px 0; text-align: center; color: #702906; }
+    .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; }
+    .time-segment { display: flex; flex-direction: column; align-items: center; min-width: 50px; }
+    .number { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #702906; }
     
     @media (max-width: 768px) {
       .page-wrapper { width: 130%; left: -15%; }
-      #internal-countdown { position: absolute; top: 24%; left: 0%; width: 100%; transform: scale(1.2); }
     }
   </style>
 </head>
@@ -51,14 +52,14 @@
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page1.mp4"></video><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 84%; left: 30%; width: 40%; height: 6%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page2.mp4"></video></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page3.mp4"></video></div>
-        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page4.mp4"></video><div id="internal-countdown"><h2 class="countdown-title">Alyssa's Quinceañera</h2><div class="countdown-wrapper"><div class="time-segment"><span id="days" class="number">00</span></div><div class="time-segment"><span id="hours" class="number">00</span></div><div class="time-segment"><span id="minutes" class="number">00</span></div><div class="time-segment"><span id="seconds" class="number">00</span></div></div></div></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page4.mp4"></video><div id="internal-countdown"><h2 class="countdown-title">Alyssa's Quinceañera</h2><div class="countdown-wrapper"><div class="time-segment"><span id="days" class="number">00</span><span style="font-size:0.6rem">DAYS</span></div><div class="time-segment"><span id="hours" class="number">00</span><span style="font-size:0.6rem">HRS</span></div><div class="time-segment"><span id="minutes" class="number">00</span><span style="font-size:0.6rem">MIN</span></div><div class="time-segment"><span id="seconds" class="number">00</span><span style="font-size:0.6rem">SEC</span></div></div></div></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page5.mp4"></video><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 30%; left: 8%; width: 42%; height: 8%; z-index: 10;"></a><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 50%; left: 50%; width: 42%; height: 8%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page6.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 87%; left: 67%; width: 25%; height: 6.2%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="Page6%20Spanish.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 87%; left: 67%; width: 25%; height: 6.2%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page7.mp4"></video><a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform?usp=header" target="_blank" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page8.mp4"></video></div>
       `;
-      initVideoObserver();
+      initVideoObserver(); startCountdown();
     }
 
     function initVideoObserver() {
@@ -82,6 +83,34 @@
       m.paused ? m.play() : m.pause();
       document.getElementById('play-pause-img').src = m.paused ? 'play icon.png' : 'pause icon.png';
       v.style.opacity = m.paused ? '0' : '1';
+    }
+
+    function startCountdown() {
+      const targetDate = new Date("September 6, 2026 00:00:00").getTime();
+      const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          clearInterval(timer);
+          return;
+        }
+
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const daysEl = document.getElementById("days");
+        const hrsEl = document.getElementById("hours");
+        const minEl = document.getElementById("minutes");
+        const secEl = document.getElementById("seconds");
+
+        if(daysEl) daysEl.innerText = d.toString().padStart(2, '0');
+        if(hrsEl) hrsEl.innerText = h.toString().padStart(2, '0');
+        if(minEl) minEl.innerText = m.toString().padStart(2, '0');
+        if(secEl) secEl.innerText = s.toString().padStart(2, '0');
+      }, 1000);
     }
   </script>
 </body>
