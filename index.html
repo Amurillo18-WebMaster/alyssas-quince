@@ -235,4 +235,14 @@
           if (elDays && elHours && elMins && elSecs) {
             elDays.innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
             elHours.innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            elMins.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).
+            elMins.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            elSecs.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+          }
+        }, 1000);
+      } catch(err) {
+        console.log("Countdown timer error: ", err);
+      }
+    }
+  </script>
+</body>
+</html>
