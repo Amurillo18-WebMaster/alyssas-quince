@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
   
-  <!-- Link Preview Code -->
   <meta property="og:title" content="You're Invited to Alyssa's Quinceañera!" />
   <meta property="og:description" content="Tap here to open the interactive invitation and RSVP." />
   <meta property="og:image" content="https://amurillo18-webmaster.github.io/alyssas-quince/Quince%20link%20cover.png" />
@@ -13,47 +12,21 @@
   <meta property="og:type" content="website" />
 
   <link rel="preload" href="envelope.gif" as="image">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   
   <style>
     body, html { margin: 0; padding: 0; height: 100%; background-color: #fcfcfc; overflow-x: hidden; }
-    
-    /* Envelope perfectly centered */
     #envelope-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('envelope.gif'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; z-index: 50; }
-    
     #invitation-content { display: none; width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
     .page-wrapper { position: relative; width: 100%; }
     .invite-media { width: 100%; display: block; }
-    
-    /* Invisible Button covers the entire screen now */
     .invisible-btn { background: rgba(255, 255, 255, 0.01); border: none; outline: none; cursor: pointer; padding: 0; margin: 0; -webkit-tap-highlight-color: transparent; }
-    
-    /* =========================================
-       GOLD GRADIENT TEXT CLASS
-       ========================================= */
     .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4)); }
     
-    /* =========================================
-       FLOATING MUSIC BUTTON 
-       ========================================= */
-    #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; -webkit-tap-highlight-color: transparent;}
+    #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; }
+    #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; }
+    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; height: 51px; opacity: 0; transition: opacity 0.3s ease; }
     
-    #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; object-fit: contain; z-index: 1;}
-    
-    #dancing-video { 
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-      width: 51px; height: 51px; object-fit: cover; 
-      pointer-events: none; z-index: 2;
-      opacity: 0; /* Starts hidden until music plays */
-      transition: opacity 0.3s ease; /* Smooth fade in and out */
-    }
-    
-    /* =========================================
-       CUSTOM COUNTDOWN WIDGET STYLES
-       ========================================= */
     .countdown-title { font-family: 'Great Vibes', cursive; font-size: 2.8rem; font-weight: normal; margin: 0 0 5px 0; text-align: center; }
     .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 0px 10px; width: 100%; box-sizing: border-box; }
     .time-segment { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
@@ -61,198 +34,99 @@
     .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-top: 2px; }
     .divider { font-size: 1.8rem; font-weight: 300; color: #ccc; margin: 0 8px; padding-bottom: 25px; }
 
-    /* Desktop settings */
-    @media (min-width: 769px) {
-      #internal-countdown { position: absolute; top: 25%; left: 10%; width: 80%; height: 120px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); }
-    }
-    
-    /* Mobile settings */
     @media (max-width: 768px) {
       .page-wrapper { width: 130%; left: -15%; }
       #internal-countdown { position: absolute; top: 24%; left: 0%; width: 100%; height: 100px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); transform-origin: center top; }
-      .countdown-title { font-size: 2.1rem; margin-bottom: 0px; } 
-      .number { font-size: 2.2rem; } 
-      .divider { font-size: 1.8rem; margin: 0 4px; padding-bottom: 20px; }
-      .time-segment { min-width: 55px; } 
-      .label { font-size: 0.65rem; } 
     }
+    
+    .sparkle-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+    .sparkle-icon { position: absolute; font-size: 15px; text-shadow: 0 0 8px #FFD700; opacity: 0; animation: twinkle 2s infinite ease-in-out; }
+    @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } }
   </style>
 </head>
 <body>
 
   <audio id="bg-music" src="music.m4a" loop playsinline></audio>
 
-  <button id="floating-music-btn" onclick="toggleFloatingMusic()">
-    <img id="play-pause-img" src="play icon.png" alt="Play/Pause">
-    <img id="dancing-video" src="dancing icon.webp" alt="Dancing Icon">
+  <button id="floating-music-btn" onclick="toggleMusic()">
+    <img id="play-pause-img" src="play icon.png">
+    <img id="dancing-video" src="dancing icon.webp">
   </button>
 
-  <div id="envelope-screen" onclick="openEnvelope()">
-    <button class="invisible-btn" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 60;"></button>
-  </div>
-
-  <div id="invitation-content">
-    <div id="pages-container"></div>
-  </div>
+  <div id="envelope-screen" onclick="openEnvelope()"><button class="invisible-btn" style="width:100%; height:100%"></button></div>
+  <div id="invitation-content"><div id="pages-container"></div></div>
 
   <script>
     let envelopeHasOpened = false;
-
     function openEnvelope() {
       if (envelopeHasOpened) return;
       envelopeHasOpened = true;
-
-      var music = document.getElementById('bg-music');
-      music.play().catch(e => console.log("Auto-play blocked: ", e));
-      
       document.getElementById('envelope-screen').style.display = 'none';
       document.getElementById('floating-music-btn').style.display = 'block';
+      document.getElementById('bg-music').play().catch(()=>{});
+      document.getElementById('invitation-content').style.display = 'block';
       
-      const container = document.getElementById('pages-container');
-      
-      container.innerHTML = `
-        <div class="page-wrapper">
-          <video muted playsinline class="invite-media" src="page1.mp4"></video>
-          <a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 84%; left: 30%; width: 40%; height: 6%; display: block; z-index: 10;"></a>
-        </div>
-        
+      document.getElementById('pages-container').innerHTML = `
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page1.mp4"></video><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 84%; left: 30%; width: 40%; height: 6%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page2.mp4"></video></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page3.mp4"></video></div>
-        
-        <div class="page-wrapper">
-          <video muted playsinline class="invite-media" src="page4.mp4"></video>
-          <div id="internal-countdown">
-            <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
-            <div class="countdown-wrapper">
-              <div class="time-segment"><span id="days" class="number gold-gradient">00</span><span class="label">Days</span></div>
-              <div class="divider gold-gradient">:</div>
-              <div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span class="label">Hours</span></div>
-              <div class="divider gold-gradient">:</div>
-              <div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span class="label">Minutes</span></div>
-              <div class="divider gold-gradient">:</div>
-              <div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span class="label">Seconds</span></div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="page-wrapper">
-          <video muted playsinline class="invite-media" src="page5.mp4"></video>
-          <a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 30%; left: 8%; width: 42%; height: 8%; display: block; z-index: 10;"></a>
-          <a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 50%; left: 50%; width: 42%; height: 8%; display: block; z-index: 10;"></a>
-        </div>
-        
-        <div class="page-wrapper">
-          <video muted playsinline class="invite-media" src="page6.mp4"></video>
-          <a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 81%; left: 58%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
-        </div>
-
-        <div class="page-wrapper">
-          <video muted playsinline class="invite-media" src="Page6%20Spanish.mp4"></video>
-          <a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 81%; left: 58%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
-        </div>
-        
-        <div class="page-wrapper">
-          <video muted playsinline class="invite-media" src="page7.mp4"></video>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform?usp=header" target="_blank" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
-        </div>
-        
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page4.mp4"></video><div id="internal-countdown"><h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2><div class="countdown-wrapper"><div class="time-segment"><span id="days" class="number gold-gradient">00</span><span class="label">Days</span></div><div class="divider gold-gradient">:</div><div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span class="label">Hours</span></div><div class="divider gold-gradient">:</div><div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span class="label">Minutes</span></div><div class="divider gold-gradient">:</div><div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span class="label">Seconds</span></div></div></div></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page5.mp4"></video><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 30%; left: 8%; width: 42%; height: 8%; z-index: 10;"></a><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 50%; left: 50%; width: 42%; height: 8%; z-index: 10;"></a></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page6.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 81%; left: 58%; width: 30%; height: 6%; z-index: 10;"></a></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="Page6%20Spanish.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 81%; left: 58%; width: 30%; height: 6%; z-index: 10;"></a></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page7.mp4"></video><a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform?usp=header" target="_blank" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page8.mp4"></video></div>
       `;
-      
-      document.getElementById('invitation-content').style.display = 'block';
-      initVideoObserver();
-      startCountdown(); 
+      initVideoObserver(); startCountdown();
     }
 
-    // Video Engine with Seamless Background Loading PNG Fix
     function initVideoObserver() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.play().catch(e => console.log(e));
-          } else {
-            entry.target.pause();
-          }
-        });
+      let observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => e.isIntersecting ? e.target.play().catch(()=>{}) : e.target.pause());
       }, { threshold: 0.1 });
 
-      document.querySelectorAll('video.invite-media').forEach(v => {
+      document.querySelectorAll('video.invite-media').forEach((v, idx) => {
         observer.observe(v);
-        
-        v.addEventListener('ended', function() {
-          observer.unobserve(this); 
-          
-          let img = new Image();
-          img.className = 'invite-media';
-          
-          // Wait silently until the PNG is completely loaded before replacing the video
-          img.onload = () => {
-            this.parentNode.replaceChild(img, this);
-          };
-          
-          // Trigger the download
-          img.src = this.src.replace('.mp4', '.png'); 
-        });
+        v.onended = function() {
+          observer.unobserve(this);
+          let img = new Image(); img.className = 'invite-media';
+          img.onload = () => { let p = this.parentNode; p.replaceChild(img, this); spawnSparkles(p, idx + 1); };
+          img.src = this.src.replace('.mp4', '.png');
+        };
       });
     }
 
-    function toggleFloatingMusic() {
-      let m = document.getElementById('bg-music');
-      if (m.paused) {
-        m.play();
-      } else {
-        m.pause();
-      }
+    function spawnSparkles(parent, pNum) {
+      const maps = { 1: [{x:48, y:12}, {x:73, y:33}], 4: [{x:48, y:12}, {x:24, y:70}], 5: [{x:48, y:5}], 6: [{x:80, y:82}], 7: [{x:30, y:28}, {x:60, y:50}], 8: [{x:48, y:12}] };
+      if (!maps[pNum]) return;
+      let layer = document.createElement('div'); layer.className = 'sparkle-layer';
+      maps[pNum].forEach(pos => {
+        let s = document.createElement('div'); s.className = 'sparkle-icon'; s.innerHTML = '✦';
+        s.style.left = pos.x + '%'; s.style.top = pos.y + '%';
+        s.style.animationDelay = Math.random() + 's';
+        layer.appendChild(s);
+      });
+      parent.appendChild(layer);
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-      var music = document.getElementById('bg-music');
-      var iconImg = document.getElementById('play-pause-img');
-      var dancingVid = document.getElementById('dancing-video');
-
-      if (music) {
-        music.addEventListener('play', function() {
-          if (iconImg) iconImg.src = 'pause icon.png'; 
-          if (dancingVid) dancingVid.style.opacity = '1'; 
-        });
-        music.addEventListener('pause', function() {
-          if (iconImg) iconImg.src = 'play icon.png'; 
-          if (dancingVid) dancingVid.style.opacity = '0'; 
-        });
-      }
-    });
+    function toggleMusic() {
+      let m = document.getElementById('bg-music');
+      let v = document.getElementById('dancing-video');
+      m.paused ? m.play() : m.pause();
+      document.getElementById('play-pause-img').src = m.paused ? 'play icon.png' : 'pause icon.png';
+      v.style.opacity = m.paused ? '0' : '1';
+    }
 
     function startCountdown() {
-      try {
-        var targetDate = new Date("September 6, 2026 00:00:00").getTime();
-        var countdownInterval = setInterval(function() {
-          var now = new Date().getTime();
-          var distance = targetDate - now;
-
-          if (distance < 0) {
-            clearInterval(countdownInterval);
-            var countdownBox = document.getElementById("internal-countdown");
-            if (countdownBox) {
-              countdownBox.innerHTML = "<h2 class='countdown-title gold-gradient'>The Event is Here!</h2>";
-            }
-            return;
-          }
-
-          var elDays = document.getElementById("days");
-          var elHours = document.getElementById("hours");
-          var elMins = document.getElementById("minutes");
-          var elSecs = document.getElementById("seconds");
-
-          if (elDays && elHours && elMins && elSecs) {
-            elDays.innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            elHours.innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            elMins.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            elSecs.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-          }
-        }, 1000);
-      } catch(err) {
-        console.log("Countdown timer error: ", err);
-      }
+      var targetDate = new Date("September 6, 2026 00:00:00").getTime();
+      setInterval(function() {
+        var now = new Date().getTime(); var distance = targetDate - now;
+        if (distance < 0) return;
+        document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+      }, 1000);
     }
   </script>
 </body>
