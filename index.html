@@ -22,10 +22,8 @@
     .invite-media { width: 100%; display: block; }
     .invisible-btn { background: rgba(255, 255, 255, 0.01); border: none; outline: none; cursor: pointer; padding: 0; margin: 0; -webkit-tap-highlight-color: transparent; }
     .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4)); }
-    
     #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; }
     #play-pause-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; }
-    #dancing-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 51px; height: 51px; opacity: 0; transition: opacity 0.3s ease; }
     
     .countdown-title { font-family: 'Great Vibes', cursive; font-size: 2.8rem; font-weight: normal; margin: 0 0 5px 0; text-align: center; }
     .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 0px 10px; width: 100%; box-sizing: border-box; }
@@ -38,10 +36,6 @@
       .page-wrapper { width: 130%; left: -15%; }
       #internal-countdown { position: absolute; top: 24%; left: 0%; width: 100%; height: 100px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); transform-origin: center top; }
     }
-    
-    .sparkle-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-    .sparkle-icon { position: absolute; font-size: 15px; text-shadow: 0 0 8px #FFD700; opacity: 0; animation: twinkle 2s infinite ease-in-out; }
-    @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } }
   </style>
 </head>
 <body>
@@ -50,7 +44,6 @@
 
   <button id="floating-music-btn" onclick="toggleMusic()">
     <img id="play-pause-img" src="play icon.png">
-    <img id="dancing-video" src="dancing icon.webp">
   </button>
 
   <div id="envelope-screen" onclick="openEnvelope()"><button class="invisible-btn" style="width:100%; height:100%"></button></div>
@@ -85,36 +78,21 @@
         entries.forEach(e => e.isIntersecting ? e.target.play().catch(()=>{}) : e.target.pause());
       }, { threshold: 0.1 });
 
-      document.querySelectorAll('video.invite-media').forEach((v, idx) => {
+      document.querySelectorAll('video.invite-media').forEach((v) => {
         observer.observe(v);
         v.onended = function() {
           observer.unobserve(this);
           let img = new Image(); img.className = 'invite-media';
-          img.onload = () => { let p = this.parentNode; p.replaceChild(img, this); spawnSparkles(p, idx + 1); };
+          img.onload = () => { this.parentNode.replaceChild(img, this); };
           img.src = this.src.replace('.mp4', '.png');
         };
       });
     }
 
-    function spawnSparkles(parent, pNum) {
-      const maps = { 1: [{x:48, y:12}, {x:73, y:33}], 4: [{x:48, y:12}, {x:24, y:70}], 5: [{x:48, y:5}], 6: [{x:80, y:82}], 7: [{x:30, y:28}, {x:60, y:50}], 8: [{x:48, y:12}] };
-      if (!maps[pNum]) return;
-      let layer = document.createElement('div'); layer.className = 'sparkle-layer';
-      maps[pNum].forEach(pos => {
-        let s = document.createElement('div'); s.className = 'sparkle-icon'; s.innerHTML = '✦';
-        s.style.left = pos.x + '%'; s.style.top = pos.y + '%';
-        s.style.animationDelay = Math.random() + 's';
-        layer.appendChild(s);
-      });
-      parent.appendChild(layer);
-    }
-
     function toggleMusic() {
       let m = document.getElementById('bg-music');
-      let v = document.getElementById('dancing-video');
       m.paused ? m.play() : m.pause();
       document.getElementById('play-pause-img').src = m.paused ? 'play icon.png' : 'pause icon.png';
-      v.style.opacity = m.paused ? '0' : '1';
     }
 
     function startCountdown() {
