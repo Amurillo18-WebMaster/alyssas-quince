@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
   
+  <!-- Link Preview Code -->
   <meta property="og:title" content="You're Invited to Alyssa's Quinceañera!" />
   <meta property="og:description" content="Tap here to open the interactive invitation and RSVP." />
   <meta property="og:image" content="https://amurillo18-webmaster.github.io/alyssas-quince/Quince%20link%20cover.png" />
@@ -65,7 +66,7 @@
       #internal-countdown { position: absolute; top: 25%; left: 10%; width: 80%; height: 120px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); }
     }
     
-    /* Mobile settings (Adjusted top to 24% to raise it by 5%) */
+    /* Mobile settings */
     @media (max-width: 768px) {
       .page-wrapper { width: 130%; left: -15%; }
       #internal-countdown { position: absolute; top: 24%; left: 0%; width: 100%; height: 100px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); transform-origin: center top; }
@@ -109,7 +110,6 @@
       
       const container = document.getElementById('pages-container');
       
-      // All devices now strictly use the high-quality MP4 video engine
       container.innerHTML = `
         <div class="page-wrapper">
           <video muted playsinline class="invite-media" src="page1.mp4"></video>
@@ -164,7 +164,7 @@
       startCountdown(); 
     }
 
-    // Video Engine & PNG Swapper handles all devices now
+    // Video Engine with Seamless Background Loading PNG Fix
     function initVideoObserver() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -179,15 +179,19 @@
       document.querySelectorAll('video.invite-media').forEach(v => {
         observer.observe(v);
         
-        // When video ends, swap to a crisp PNG
         v.addEventListener('ended', function() {
           observer.unobserve(this); 
           
-          let img = document.createElement('img');
+          let img = new Image();
           img.className = 'invite-media';
-          img.src = this.src.replace('.mp4', '.png'); 
           
-          this.parentNode.replaceChild(img, this);
+          // Wait silently until the PNG is completely loaded before replacing the video
+          img.onload = () => {
+            this.parentNode.replaceChild(img, this);
+          };
+          
+          // Trigger the download
+          img.src = this.src.replace('.mp4', '.png'); 
         });
       });
     }
