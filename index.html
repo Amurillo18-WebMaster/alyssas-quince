@@ -36,7 +36,7 @@
     .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4)); }
     
     /* =========================================
-       FLOATING MUSIC BUTTON (Optimized for Transparent WebP)
+       FLOATING MUSIC BUTTON 
        ========================================= */
     #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; -webkit-tap-highlight-color: transparent;}
     
@@ -60,12 +60,15 @@
     .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-top: 2px; }
     .divider { font-size: 1.8rem; font-weight: 300; color: #ccc; margin: 0 8px; padding-bottom: 25px; }
 
+    /* Desktop settings */
     @media (min-width: 769px) {
       #internal-countdown { position: absolute; top: 25%; left: 10%; width: 80%; height: 120px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); }
     }
+    
+    /* Mobile settings (Adjusted top to 24% to raise it by 5%) */
     @media (max-width: 768px) {
       .page-wrapper { width: 130%; left: -15%; }
-      #internal-countdown { position: absolute; top: 29%; left: 0%; width: 100%; height: 100px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); transform-origin: center top; }
+      #internal-countdown { position: absolute; top: 24%; left: 0%; width: 100%; height: 100px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); transform-origin: center top; }
       .countdown-title { font-size: 2.1rem; margin-bottom: 0px; } 
       .number { font-size: 2.2rem; } 
       .divider { font-size: 1.8rem; margin: 0 4px; padding-bottom: 20px; }
@@ -92,8 +95,6 @@
   </div>
 
   <script>
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const ext = isIOS ? 'mp4' : 'webp';
     let envelopeHasOpened = false;
 
     function openEnvelope() {
@@ -108,16 +109,18 @@
       
       const container = document.getElementById('pages-container');
       
+      // All devices now strictly use the high-quality MP4 video engine
       container.innerHTML = `
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page1.${ext}"></${isIOS ? 'video' : 'img'}>
+        <div class="page-wrapper">
+          <video muted playsinline class="invite-media" src="page1.mp4"></video>
           <a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 84%; left: 30%; width: 40%; height: 6%; display: block; z-index: 10;"></a>
         </div>
         
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page2.${ext}"></${isIOS ? 'video' : 'img'}></div>
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page3.${ext}"></${isIOS ? 'video' : 'img'}></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page2.mp4"></video></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page3.mp4"></video></div>
         
         <div class="page-wrapper">
-          <${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page4.${ext}"></${isIOS ? 'video' : 'img'}>
+          <video muted playsinline class="invite-media" src="page4.mp4"></video>
           <div id="internal-countdown">
             <h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2>
             <div class="countdown-wrapper">
@@ -132,24 +135,28 @@
           </div>
         </div>
         
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page5.${ext}"></${isIOS ? 'video' : 'img'}>
+        <div class="page-wrapper">
+          <video muted playsinline class="invite-media" src="page5.mp4"></video>
           <a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 30%; left: 8%; width: 42%; height: 8%; display: block; z-index: 10;"></a>
           <a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 50%; left: 50%; width: 42%; height: 8%; display: block; z-index: 10;"></a>
         </div>
         
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page6.${ext}"></${isIOS ? 'video' : 'img'}>
+        <div class="page-wrapper">
+          <video muted playsinline class="invite-media" src="page6.mp4"></video>
           <a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 81%; left: 58%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
         </div>
 
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="Page6%20Spanish.${ext}"></${isIOS ? 'video' : 'img'}>
+        <div class="page-wrapper">
+          <video muted playsinline class="invite-media" src="Page6%20Spanish.mp4"></video>
           <a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 81%; left: 58%; width: 30%; height: 6%; display: block; z-index: 10;"></a>
         </div>
         
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page7.${ext}"></${isIOS ? 'video' : 'img'}>
+        <div class="page-wrapper">
+          <video muted playsinline class="invite-media" src="page7.mp4"></video>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform?usp=header" target="_blank" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; display: block; z-index: 10;"></a>
         </div>
         
-        <div class="page-wrapper"><${isIOS ? 'video muted playsinline' : 'img'} class="invite-media" src="page8.${ext}"></${isIOS ? 'video' : 'img'}></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page8.mp4"></video></div>
       `;
       
       document.getElementById('invitation-content').style.display = 'block';
@@ -157,9 +164,8 @@
       startCountdown(); 
     }
 
+    // Video Engine & PNG Swapper handles all devices now
     function initVideoObserver() {
-      if (!isIOS) return; 
-      
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -173,6 +179,7 @@
       document.querySelectorAll('video.invite-media').forEach(v => {
         observer.observe(v);
         
+        // When video ends, swap to a crisp PNG
         v.addEventListener('ended', function() {
           observer.unobserve(this); 
           
