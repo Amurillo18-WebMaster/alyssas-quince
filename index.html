@@ -15,10 +15,11 @@
     .invisible-btn { background: rgba(255, 255, 255, 0.01); border: none; outline: none; cursor: pointer; padding: 0; margin: 0; -webkit-tap-highlight-color: transparent; }
     .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
     
-    /* FLOATING BUTTON: Shrunk by 10% (from 76px to 68.4px), moved up 0.2% (bottom 20px -> 20.2px) */
+    /* FLOATING BUTTON: Corrected layout */
     #floating-music-btn { position: fixed; bottom: 20.2px; left: 20px; width: 68.4px; height: 68.4px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; padding: 0; overflow: hidden; }
-    #play-pause-img { position: absolute; top: 0; left: 0; width: 68.4px; height: 68.4px; z-index: 1; }
-    #dancing-video { position: absolute; top: 0; left: 0; width: 68.4px; height: 68.4px; z-index: 3; opacity: 1; transition: opacity 0.3s ease; mix-blend-mode: multiply; }
+    #play-pause-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; object-fit: contain; }
+    /* Dancing icon sits on top, visible by default */
+    #dancing-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 1; mix-blend-mode: multiply; }
     
     #internal-countdown { position: absolute; top: 32%; left: 0%; width: 100%; z-index: 10; display: flex; justify-content: center; transform: scale(1.4); }
     .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; }
@@ -32,7 +33,7 @@
   <audio id="bg-music" src="music.m4a" loop playsinline></audio>
   <button id="floating-music-btn" onclick="toggleMusic()">
     <img id="play-pause-img" src="play icon.png">
-    <img id="dancing-video" src="dancing icon.png">
+    <img id="dancing-video" src="dancing icon.webp">
   </button>
   <div id="envelope-screen" onclick="openEnvelope()"><button class="invisible-btn" style="width:100%; height:100%"></button></div>
   <div id="invitation-content"><div id="pages-container"></div></div>
@@ -78,10 +79,8 @@
 
     function toggleMusic() {
       let m = document.getElementById('bg-music');
-      let v = document.getElementById('dancing-video');
       if (m.paused) { m.play(); } else { m.pause(); }
       document.getElementById('play-pause-img').src = m.paused ? 'play icon.png' : 'pause icon.png';
-      v.style.opacity = m.paused ? '0' : '1';
     }
 
     function startCountdown() {
