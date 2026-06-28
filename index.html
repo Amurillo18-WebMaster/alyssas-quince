@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Alyssa's Quinceañera</title>
-  
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   
   <style>
@@ -14,39 +13,38 @@
     .page-wrapper { position: relative; width: 100%; }
     .invite-media { width: 100%; display: block; }
     .invisible-btn { background: rgba(255, 255, 255, 0.01); border: none; outline: none; cursor: pointer; padding: 0; margin: 0; -webkit-tap-highlight-color: transparent; }
-    
-    /* RESTORED COUNTDOWN STYLING */
-    .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.4)); }
-    #internal-countdown { position: absolute; top: 24%; left: 0%; width: 100%; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: scale(1.2); transform-origin: center top; }
-    .countdown-title { font-family: 'Great Vibes', cursive; font-size: 2.8rem; margin: 0 0 5px 0; text-align: center; }
-    .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; }
-    .time-segment { display: flex; flex-direction: column; align-items: center; min-width: 55px; }
-    .number { font-family: 'Great Vibes', cursive; font-size: 2.2rem; line-height: 1; }
-    .label { font-size: 0.65rem; text-transform: uppercase; color: #888; }
+    .gold-gradient { background: linear-gradient(to bottom, #e7aa51 0%, #e7aa51 50%, #702906 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
     
     #floating-music-btn { position: fixed; bottom: 20px; left: 20px; width: 76px; height: 76px; background: #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 9999; display: none; border: none; outline: none; padding: 0; }
     #play-pause-img { position: absolute; top: 0; left: 0; width: 76px; height: 76px; z-index: 1; }
     #dancing-video { position: absolute; top: 0; left: 0; width: 76px; height: 76px; z-index: 3; opacity: 0; transition: opacity 0.3s ease; }
     
-    @media (max-width: 768px) {
-      .page-wrapper { width: 130%; left: -15%; }
-    }
+    #internal-countdown { position: absolute; top: 22%; left: 0%; width: 100%; z-index: 10; display: flex; justify-content: center; transform: scale(1.4); }
+    .countdown-wrapper { display: flex; align-items: center; justify-content: center; font-family: 'Helvetica Neue', Arial, sans-serif; }
+    .time-segment { display: flex; flex-direction: column; align-items: center; min-width: 50px; }
+    .number { font-family: 'Great Vibes', cursive; font-size: 2.2rem; }
+    
+    @media (max-width: 768px) { .page-wrapper { width: 130%; left: -15%; } }
   </style>
 </head>
 <body>
-
   <audio id="bg-music" src="music.m4a" loop playsinline></audio>
-
   <button id="floating-music-btn" onclick="toggleMusic()">
     <img id="play-pause-img" src="play icon.png">
     <img id="dancing-video" src="dancing icon.webp">
   </button>
-
   <div id="envelope-screen" onclick="openEnvelope()"><button class="invisible-btn" style="width:100%; height:100%"></button></div>
   <div id="invitation-content"><div id="pages-container"></div></div>
 
   <script>
     let envelopeHasOpened = false;
+
+    // ADDED: Explicit listener to show icon on ANY music launch
+    document.getElementById('bg-music').addEventListener('play', () => {
+      document.getElementById('dancing-video').style.opacity = '1';
+      document.getElementById('play-pause-img').src = 'pause icon.png';
+    });
+
     function openEnvelope() {
       if (envelopeHasOpened) return;
       envelopeHasOpened = true;
@@ -59,10 +57,10 @@
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page1.mp4"></video><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 84%; left: 30%; width: 40%; height: 6%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page2.mp4"></video></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page3.mp4"></video></div>
-        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page4.mp4"></video><div id="internal-countdown"><h2 class="countdown-title gold-gradient">Alyssa's Quinceañera</h2><div class="countdown-wrapper"><div class="time-segment"><span id="days" class="number gold-gradient">00</span><span class="label">Days</span></div><div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span class="label">Hrs</span></div><div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span class="label">Min</span></div><div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span class="label">Sec</span></div></div></div></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page4.mp4"></video><div id="internal-countdown"><div class="countdown-wrapper"><div class="time-segment"><span id="days" class="number gold-gradient">00</span><span style="font-size:0.5rem; color:#888;">DAYS</span></div><div class="time-segment"><span id="hours" class="number gold-gradient">00</span><span style="font-size:0.5rem; color:#888;">HRS</span></div><div class="time-segment"><span id="minutes" class="number gold-gradient">00</span><span style="font-size:0.5rem; color:#888;">MIN</span></div><div class="time-segment"><span id="seconds" class="number gold-gradient">00</span><span style="font-size:0.5rem; color:#888;">SEC</span></div></div></div></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page5.mp4"></video><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 30%; left: 8%; width: 42%; height: 8%; z-index: 10;"></a><a href="https://www.google.com/maps/place/Cal+Aero+Events+-+Hangar+Weddings,+Corporate+Events,+Special+Events+and+More!/@33.9816226,-117.6416522,17z/data=!3m1!4b1!4m6!3m5!1s0x80dccc9d270e8089:0xee44c0dd26ad5c46!8m2!3d33.9816182!4d-117.6390773!16s%2Fg%2F1hm507bcp?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="position: absolute; top: 50%; left: 50%; width: 42%; height: 8%; z-index: 10;"></a></div>
-        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page6.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 87%; left: 67%; width: 25%; height: 6.2%; z-index: 10;"></a></div>
-        <div class="page-wrapper"><video muted playsinline class="invite-media" src="Page6%20Spanish.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 87%; left: 67%; width: 25%; height: 6.2%; z-index: 10;"></a></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="page6.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 87%; left: 67%; width: 25%; height: 6%; z-index: 10;"></a></div>
+        <div class="page-wrapper"><video muted playsinline class="invite-media" src="Page6%20Spanish.mp4"></video><a href="https://www.amazon.com/hz/wishlist/ls/Z4ENUD5H6JJO?ref=cm_sw_sm_r_un_un_okPFPtuiXL1hT" target="_blank" style="position: absolute; top: 87%; left: 67%; width: 25%; height: 6%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page7.mp4"></video><a href="https://docs.google.com/forms/d/e/1FAIpQLSeLlFF9Fk8jGwnpqhVqs0fdYF7oQq307V00fA9B0taicaX1Bw/viewform?usp=header" target="_blank" style="position: absolute; top: 73%; left: 25%; width: 50%; height: 10%; z-index: 10;"></a></div>
         <div class="page-wrapper"><video muted playsinline class="invite-media" src="page8.mp4"></video></div>
       `;
@@ -87,9 +85,7 @@
     function toggleMusic() {
       let m = document.getElementById('bg-music');
       let v = document.getElementById('dancing-video');
-      m.paused ? m.play() : m.pause();
-      document.getElementById('play-pause-img').src = m.paused ? 'play icon.png' : 'pause icon.png';
-      v.style.opacity = m.paused ? '0' : '1';
+      if (m.paused) { m.play(); } else { m.pause(); }
     }
 
     function startCountdown() {
